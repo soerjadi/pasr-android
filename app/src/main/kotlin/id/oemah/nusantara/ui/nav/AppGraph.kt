@@ -18,6 +18,7 @@ import id.oemah.nusantara.feature.checkout.CheckoutRoute
 import id.oemah.nusantara.feature.home.HomeRoute
 import id.oemah.nusantara.feature.orders.ConfirmationRoute
 import id.oemah.nusantara.feature.orders.TrackingRoute
+import id.oemah.nusantara.feature.orders.history.OrderHistoryRoute
 import id.oemah.nusantara.feature.products.ProductListRoute
 import id.oemah.nusantara.feature.products.SearchRoute
 import id.oemah.nusantara.feature.products.detail.ProductDetailRoute
@@ -93,7 +94,12 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
         )
     }
     composable<Route.OrderTracking> { TrackingRoute(onBack = { navController.popBackStack() }) }
-    composable<Route.Orders> { Placeholder(stringResource(R.string.tab_orders)) }
+    composable<Route.Orders> {
+        OrderHistoryRoute(
+            onOpenOrder = { navController.navigate(Route.OrderTracking(it)) },
+            onLogin = { navController.navigate(Route.Login) },
+        )
+    }
     composable<Route.Favorites> { Placeholder(stringResource(R.string.tab_favorites)) }
     composable<Route.Account> { Placeholder(stringResource(R.string.tab_account)) }
     composable<Route.Login> { LoginRoute(onLoggedIn = { navController.popBackStack() }) }
