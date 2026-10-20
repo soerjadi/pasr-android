@@ -14,6 +14,7 @@ import id.oemah.nusantara.R
 import id.oemah.nusantara.feature.auth.LoginRoute
 import id.oemah.nusantara.feature.cart.CartRoute
 import id.oemah.nusantara.feature.categories.CategoriesRoute
+import id.oemah.nusantara.feature.checkout.CheckoutRoute
 import id.oemah.nusantara.feature.home.HomeRoute
 import id.oemah.nusantara.feature.products.ProductListRoute
 import id.oemah.nusantara.feature.products.SearchRoute
@@ -70,6 +71,16 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
             onBack = { navController.popBackStack() },
             onBrowse = { navController.popBackStack(Route.Home, inclusive = false) },
             onCheckout = { navController.navigate(Route.Checkout) },
+            onLoginRequired = { navController.navigate(Route.Login) },
+        )
+    }
+    composable<Route.Checkout> {
+        CheckoutRoute(
+            onBack = { navController.popBackStack() },
+            onPlaced = { orderId ->
+                navController.navigate(Route.OrderConfirmation(orderId)) { popUpTo(Route.Home) }
+            },
+            onBackToCart = { navController.popBackStack() },
             onLoginRequired = { navController.navigate(Route.Login) },
         )
     }

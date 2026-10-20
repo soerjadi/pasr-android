@@ -76,4 +76,16 @@
     <string name="cart_issue_insufficient">Stok tersisa %1$d.</string>
     <string name="cart_adjust">Sesuaikan jumlah</string>
     <string name="cart_notice_dismiss">Tutup</string>
+
+    <string name="checkout_title">Checkout</string>
+    <string name="checkout_pickup">Ambil di Toko</string>
+    <string name="checkout_summary">Ringkasan Pesanan</string>
+    <string name="checkout_payment">Metode Pembayaran</string>
+    <string name="checkout_cash">Bayar di toko saat mengambil</string>
+    <string name="checkout_qris">QRIS</string>
+    <string name="checkout_qris_soon">Segera hadir</string>
+    <string name="checkout_place">Buat Pesanan</string>
+    <string name="checkout_submitting">Memproses…</string>
+    <string name="checkout_has_issues">Ada produk yang perlu diperiksa di keranjang.</string>
+    <string name="checkout_line">%1$d × %2$s</string>
 </resources>
