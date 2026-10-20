@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.openapi.generator)
 }
 
 android {
@@ -64,7 +65,52 @@ kotlin {
     }
 }
 
+// The Retrofit client is generated from the shared contract: docs/api/openapi.yaml
+val generatedApiDir = layout.buildDirectory.dir("generated/openapi")
+
+openApiGenerate {
+    generatorName.set("kotlin")
+    library.set("jvm-retrofit2")
+    inputSpec.set(rootProject.file("../docs/api/openapi.yaml").path)
+    outputDir.set(generatedApiDir.get().asFile.path)
+    apiPackage.set("id.oemah.nusantara.api")
+    modelPackage.set("id.oemah.nusantara.api.model")
+    packageName.set("id.oemah.nusantara.api")
+    generateApiTests.set(false)
+    generateModelTests.set(false)
+    generateApiDocumentation.set(false)
+    generateModelDocumentation.set(false)
+    // Only the APIs, the models and the one supporting file the APIs import.
+    globalProperties.set(mapOf("apis" to "", "models" to "", "supportingFiles" to "CollectionFormats.kt"))
+    configOptions.set(
+        mapOf(
+            "useCoroutines" to "true",
+            "serializationLibrary" to "kotlinx_serialization",
+            "dateLibrary" to "string",
+            "enumPropertyNaming" to "UPPERCASE",
+        ),
+    )
+}
+
+tasks.named<org.openapitools.generator.gradle.plugin.tasks.ValidateTask>("openApiValidate") {
+    inputSpec.set(rootProject.file("../docs/api/openapi.yaml").path)
+}
+
+androidComponents {
+    onVariants { variant ->
+        variant.sources.kotlin?.addStaticSourceDirectory("build/generated/openapi/src/main/kotlin")
+    }
+}
+
+tasks.configureEach {
+    val generatedCodeConsumer = name.startsWith("ksp") || (name.startsWith("compile") && name.endsWith("Kotlin"))
+    if (generatedCodeConsumer) dependsOn("openApiGenerate")
+}
+
 dependencies {
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.okhttp)
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
