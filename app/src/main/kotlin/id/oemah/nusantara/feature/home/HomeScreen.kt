@@ -41,6 +41,7 @@ import id.oemah.nusantara.api.model.ProductSummary
 import id.oemah.nusantara.core.UiState
 import id.oemah.nusantara.feature.ads.AdSlot
 import id.oemah.nusantara.feature.ads.rememberLinkOpener
+import id.oemah.nusantara.feature.cart.CartButton
 import id.oemah.nusantara.feature.categories.emoji
 import id.oemah.nusantara.ui.components.ProductCard
 import id.oemah.nusantara.ui.components.userMessage
@@ -52,6 +53,7 @@ fun HomeRoute(
     onOpenCategory: (Category) -> Unit,
     onOpenAllCategories: () -> Unit,
     onOpenProduct: (Long) -> Unit,
+    onOpenCart: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
@@ -65,6 +67,7 @@ fun HomeRoute(
         onAddToCart = viewModel::addToCart,
         onOpenLink = rememberLinkOpener(),
         onRetry = viewModel::reload,
+        cartAction = { CartButton(onOpenCart) },
     )
 }
 
@@ -79,6 +82,7 @@ fun HomeScreen(
     onAddToCart: (ProductSummary) -> Unit,
     onOpenLink: (String) -> Unit,
     onRetry: () -> Unit,
+    cartAction: @Composable () -> Unit = {},
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -86,7 +90,7 @@ fun HomeScreen(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        fullWidth { Header(onSearch) }
+        fullWidth { Header(onSearch, cartAction) }
         fullWidth { Hero(onOpenFeatured) }
         fullWidth { CategoryShortcuts(state, onOpenCategory, onOpenAllCategories, onRetry) }
 
@@ -119,11 +123,12 @@ private fun LazyGridScope.fullWidth(content: @Composable () -> Unit) =
     item(span = { GridItemSpan(maxLineSpan) }) { content() }
 
 @Composable
-private fun Header(onSearch: () -> Unit) {
+private fun Header(onSearch: () -> Unit, cartAction: @Composable () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Default.LocationOn, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-            Text(stringResource(R.string.home_location), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(start = 4.dp))
+            Text(stringResource(R.string.home_location), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(start = 4.dp).weight(1f))
+            cartAction()
         }
         OutlinedCard(onClick = onSearch, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
             Row(Modifier.padding(horizontal = 16.dp).heightIn(min = 48.dp), verticalAlignment = Alignment.CenterVertically) {

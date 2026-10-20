@@ -61,4 +61,19 @@
     <string name="seller_chat">Chat dengan penjual</string>
     <string name="seller_reviews_empty">Belum ada ulasan</string>
     <string name="seller_products_empty">Belum ada produk</string>
+
+    <string name="cart_open">Buka keranjang</string>
+    <string name="cart_title">Keranjang (%1$d)</string>
+    <string name="cart_empty">Keranjang Anda kosong</string>
+    <string name="cart_browse">Belanja Sekarang</string>
+    <string name="cart_checkout">Checkout</string>
+    <string name="cart_total">Total</string>
+    <string name="cart_pickup_at">Ambil di: %1$s</string>
+    <string name="cart_validating">Memeriksa harga dan stok…</string>
+    <string name="cart_remove">Hapus</string>
+    <string name="cart_issue_out_of_stock">Stok habis. Hapus dari keranjang.</string>
+    <string name="cart_issue_unavailable">Produk tidak tersedia. Hapus dari keranjang.</string>
+    <string name="cart_issue_insufficient">Stok tersisa %1$d.</string>
+    <string name="cart_adjust">Sesuaikan jumlah</string>
+    <string name="cart_notice_dismiss">Tutup</string>
 </resources>

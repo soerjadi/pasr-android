@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import id.oemah.nusantara.R
 import id.oemah.nusantara.feature.auth.LoginRoute
+import id.oemah.nusantara.feature.cart.CartRoute
 import id.oemah.nusantara.feature.categories.CategoriesRoute
 import id.oemah.nusantara.feature.home.HomeRoute
 import id.oemah.nusantara.feature.products.ProductListRoute
@@ -29,6 +30,7 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
             onOpenCategory = { navController.navigate(Route.ProductList(it.id, it.name, false)) },
             onOpenAllCategories = { navController.navigate(Route.Categories) { launchSingleTop = true } },
             onOpenProduct = { navController.navigate(Route.ProductDetail(it)) },
+            onOpenCart = { navController.navigate(Route.Cart) },
         )
     }
     composable<Route.Categories> {
@@ -38,6 +40,7 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
         ProductListRoute(
             onBack = { navController.popBackStack() },
             onOpenProduct = { navController.navigate(Route.ProductDetail(it)) },
+            onOpenCart = { navController.navigate(Route.Cart) },
         )
     }
     composable<Route.Search> {
@@ -51,12 +54,22 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
             onBack = { navController.popBackStack() },
             onOpenSeller = { navController.navigate(Route.Seller(it)) },
             onLoginRequired = { navController.navigate(Route.Login) },
+            onOpenCart = { navController.navigate(Route.Cart) },
         )
     }
     composable<Route.Seller> {
         SellerRoute(
             onBack = { navController.popBackStack() },
             onOpenProduct = { navController.navigate(Route.ProductDetail(it)) },
+            onLoginRequired = { navController.navigate(Route.Login) },
+            onOpenCart = { navController.navigate(Route.Cart) },
+        )
+    }
+    composable<Route.Cart> {
+        CartRoute(
+            onBack = { navController.popBackStack() },
+            onBrowse = { navController.popBackStack(Route.Home, inclusive = false) },
+            onCheckout = { navController.navigate(Route.Checkout) },
             onLoginRequired = { navController.navigate(Route.Login) },
         )
     }

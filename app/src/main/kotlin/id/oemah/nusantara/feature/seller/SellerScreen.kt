@@ -3,6 +3,7 @@ package id.oemah.nusantara.feature.seller
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -41,6 +42,7 @@ import id.oemah.nusantara.api.model.SellerDetail
 import id.oemah.nusantara.core.UiEvent
 import id.oemah.nusantara.core.pick
 import id.oemah.nusantara.feature.ads.rememberLinkOpener
+import id.oemah.nusantara.feature.cart.CartButton
 import id.oemah.nusantara.ui.components.PrimaryButton
 import id.oemah.nusantara.ui.components.ProductGrid
 import id.oemah.nusantara.ui.components.ScreenHeader
@@ -51,6 +53,7 @@ fun SellerRoute(
     onBack: () -> Unit,
     onOpenProduct: (Long) -> Unit,
     onLoginRequired: () -> Unit,
+    onOpenCart: () -> Unit,
     viewModel: SellerViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
@@ -83,6 +86,7 @@ fun SellerRoute(
                 onOpenProduct = onOpenProduct,
                 onAddToCart = viewModel::addToCart,
                 onBack = onBack,
+                headerActions = { CartButton(onOpenCart) },
             )
         }
     }
@@ -101,11 +105,12 @@ fun SellerScreen(
     onOpenProduct: (Long) -> Unit,
     onAddToCart: (ProductSummary) -> Unit,
     onBack: () -> Unit,
+    headerActions: @Composable RowScope.() -> Unit = {},
 ) {
     val seller = detail.seller
     var tab by rememberSaveable { mutableIntStateOf(0) }
     Column(Modifier.fillMaxWidth()) {
-        ScreenHeader(title = seller.name, onBack = onBack)
+        ScreenHeader(title = seller.name, onBack = onBack, actions = headerActions)
         Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 seller.avatar?.let {

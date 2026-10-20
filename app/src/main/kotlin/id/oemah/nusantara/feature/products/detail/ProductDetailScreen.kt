@@ -43,6 +43,7 @@ import id.oemah.nusantara.api.model.ProductDetail
 import id.oemah.nusantara.core.Rupiah
 import id.oemah.nusantara.core.UiEvent
 import id.oemah.nusantara.core.pick
+import id.oemah.nusantara.feature.cart.CartButton
 import id.oemah.nusantara.ui.components.PrimaryButton
 import id.oemah.nusantara.ui.components.QuantityStepper
 import id.oemah.nusantara.ui.components.StateHost
@@ -52,6 +53,7 @@ fun ProductDetailRoute(
     onBack: () -> Unit,
     onOpenSeller: (Long) -> Unit,
     onLoginRequired: () -> Unit,
+    onOpenCart: () -> Unit,
     viewModel: ProductDetailViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
@@ -77,6 +79,7 @@ fun ProductDetailRoute(
                 onToggleFavorite = viewModel::toggleFavorite,
                 onOpenSeller = onOpenSeller,
                 onBack = onBack,
+                cartAction = { CartButton(onOpenCart) },
             )
         }
     }
@@ -92,12 +95,13 @@ fun ProductDetailScreen(
     onToggleFavorite: () -> Unit,
     onOpenSeller: (Long) -> Unit,
     onBack: () -> Unit,
+    cartAction: @Composable () -> Unit = {},
 ) {
     val product = detail.product
     val soldOut = product.stock <= 0
     Column(Modifier.fillMaxSize()) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
-            Gallery(detail, favorite, onToggleFavorite, onBack)
+            Gallery(detail, favorite, onToggleFavorite, onBack, cartAction)
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(product.name, style = MaterialTheme.typography.headlineSmall)
                 Text(stringResource(R.string.detail_rating, product.rating.toString(), product.ratingCount), style = MaterialTheme.typography.bodyMedium)
@@ -141,7 +145,13 @@ fun ProductDetailScreen(
 }
 
 @Composable
-private fun Gallery(detail: ProductDetail, favorite: Boolean, onToggleFavorite: () -> Unit, onBack: () -> Unit) {
+private fun Gallery(
+    detail: ProductDetail,
+    favorite: Boolean,
+    onToggleFavorite: () -> Unit,
+    onBack: () -> Unit,
+    cartAction: @Composable () -> Unit,
+) {
     val images = detail.images.ifEmpty { listOf(detail.product.image) }
     val pager = rememberPagerState { images.size }
     Box(Modifier.fillMaxWidth().aspectRatio(1f)) {
@@ -156,12 +166,15 @@ private fun Gallery(detail: ProductDetail, favorite: Boolean, onToggleFavorite: 
         IconButton(onClick = onBack, modifier = Modifier.align(Alignment.TopStart).padding(8.dp).sizeIn(minWidth = 48.dp, minHeight = 48.dp)) {
             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
         }
-        IconButton(onClick = onToggleFavorite, modifier = Modifier.align(Alignment.TopEnd).padding(8.dp).sizeIn(minWidth = 48.dp, minHeight = 48.dp)) {
-            Icon(
-                imageVector = if (favorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                contentDescription = stringResource(if (favorite) R.string.detail_favorite_remove else R.string.detail_favorite_add),
-                tint = if (favorite) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface,
-            )
+        Row(Modifier.align(Alignment.TopEnd).padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            cartAction()
+            IconButton(onClick = onToggleFavorite, modifier = Modifier.sizeIn(minWidth = 48.dp, minHeight = 48.dp)) {
+                Icon(
+                    imageVector = if (favorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    contentDescription = stringResource(if (favorite) R.string.detail_favorite_remove else R.string.detail_favorite_add),
+                    tint = if (favorite) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface,
+                )
+            }
         }
         if (detail.product.halalVerified) {
             Surface(
