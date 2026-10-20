@@ -22,7 +22,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,10 +34,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.oemah.nusantara.R
 import id.oemah.nusantara.api.model.Ad
 import id.oemah.nusantara.api.model.Order
+import id.oemah.nusantara.api.model.OrderItem
 import id.oemah.nusantara.core.DateFormat
 import id.oemah.nusantara.core.Rupiah
 import id.oemah.nusantara.core.UiEvent
@@ -44,12 +49,22 @@ import id.oemah.nusantara.ui.components.ScreenHeader
 import id.oemah.nusantara.ui.components.StateHost
 
 @Composable
-fun TrackingRoute(onBack: () -> Unit, viewModel: TrackingViewModel = hiltViewModel()) {
+fun TrackingRoute(
+    onBack: () -> Unit,
+    onReview: (orderItemId: Long, productName: String) -> Unit,
+    viewModel: TrackingViewModel = hiltViewModel(),
+) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     val waitAds = viewModel.waitAds.collectAsStateWithLifecycle().value
     val refreshing = viewModel.refreshing.collectAsStateWithLifecycle().value
     val openLink = rememberLinkOpener()
     val snackbar = remember { SnackbarHostState() }
+    // Coming back from the review screen (or the browser) shows the latest status; the first resume is the initial load.
+    var firstResume by remember { mutableStateOf(true) }
+    LifecycleResumeEffect(viewModel) {
+        if (firstResume) firstResume = false else viewModel.refresh()
+        onPauseOrDispose { }
+    }
     LaunchedEffect(viewModel) {
         viewModel.events.collect { if (it is UiEvent.Message) snackbar.showSnackbar(it.text) }
     }
@@ -57,7 +72,7 @@ fun TrackingRoute(onBack: () -> Unit, viewModel: TrackingViewModel = hiltViewMod
         Column(Modifier.padding(padding).fillMaxSize()) {
             ScreenHeader(title = stringResource(R.string.tracking_title), onBack = onBack)
             StateHost(state = state, onRetry = viewModel::reload) { order ->
-                TrackingScreen(order, waitAds, refreshing, onRefresh = viewModel::refresh, onOpenLink = openLink)
+                TrackingScreen(order, waitAds, refreshing, onRefresh = viewModel::refresh, onOpenLink = openLink, onReview = { onReview(it.id, it.name) })
             }
         }
     }
@@ -71,6 +86,7 @@ fun TrackingScreen(
     refreshing: Boolean,
     onRefresh: () -> Unit,
     onOpenLink: (String) -> Unit,
+    onReview: ((OrderItem) -> Unit)? = null,
 ) {
     PullToRefreshBox(isRefreshing = refreshing, onRefresh = onRefresh, modifier = Modifier.fillMaxSize()) {
         LazyColumn(
@@ -89,7 +105,7 @@ fun TrackingScreen(
             }
             item { Timeline(OrderTimeline.steps(order)) }
             if (waitAds.isNotEmpty()) item { AdSlot(waitAds, onOpen = onOpenLink) }
-            items(order.sellerOrders, key = { it.id }) { SellerOrderCard(it, onOpenLink) }
+            items(order.sellerOrders, key = { it.id }) { SellerOrderCard(it, onOpenLink, onReview = onReview) }
         }
     }
 }

@@ -22,7 +22,9 @@ import id.oemah.nusantara.feature.orders.history.OrderHistoryRoute
 import id.oemah.nusantara.feature.products.ProductListRoute
 import id.oemah.nusantara.feature.products.SearchRoute
 import id.oemah.nusantara.feature.products.detail.ProductDetailRoute
+import id.oemah.nusantara.feature.review.WriteReviewRoute
 import id.oemah.nusantara.feature.seller.SellerRoute
+import id.oemah.nusantara.feature.social.FavoritesRoute
 
 /** Every real destination of the app. Later features register their screens here. */
 fun NavGraphBuilder.appGraph(navController: NavHostController) {
@@ -93,14 +95,25 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
             onHome = { navController.popBackStack(Route.Home, inclusive = false) },
         )
     }
-    composable<Route.OrderTracking> { TrackingRoute(onBack = { navController.popBackStack() }) }
+    composable<Route.OrderTracking> {
+        TrackingRoute(
+            onBack = { navController.popBackStack() },
+            onReview = { itemId, name -> navController.navigate(Route.WriteReview(itemId, name)) },
+        )
+    }
     composable<Route.Orders> {
         OrderHistoryRoute(
             onOpenOrder = { navController.navigate(Route.OrderTracking(it)) },
             onLogin = { navController.navigate(Route.Login) },
         )
     }
-    composable<Route.Favorites> { Placeholder(stringResource(R.string.tab_favorites)) }
+    composable<Route.Favorites> {
+        FavoritesRoute(
+            onOpenProduct = { navController.navigate(Route.ProductDetail(it)) },
+            onLogin = { navController.navigate(Route.Login) },
+        )
+    }
+    composable<Route.WriteReview> { WriteReviewRoute(onClose = { navController.popBackStack() }) }
     composable<Route.Account> { Placeholder(stringResource(R.string.tab_account)) }
     composable<Route.Login> { LoginRoute(onLoggedIn = { navController.popBackStack() }) }
 }

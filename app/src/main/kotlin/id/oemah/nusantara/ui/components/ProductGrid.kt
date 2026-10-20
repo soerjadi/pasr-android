@@ -2,6 +2,7 @@ package id.oemah.nusantara.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,6 +33,8 @@ fun ProductGrid(
     onOpen: (Long) -> Unit,
     onAdd: (ProductSummary) -> Unit,
     modifier: Modifier = Modifier,
+    hiddenIds: Set<Long> = emptySet(),
+    overlay: @Composable BoxScope.(ProductSummary) -> Unit = {},
 ) {
     val refresh = items.loadState.refresh
     when {
@@ -47,8 +50,11 @@ fun ProductGrid(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             items(count = items.itemCount, key = items.itemKey { it.id }) { index ->
-                items[index]?.let { product ->
-                    ProductCard(product, onOpen = { onOpen(product.id) }, onAdd = { onAdd(product) })
+                items[index]?.takeIf { it.id !in hiddenIds }?.let { product ->
+                    Box {
+                        ProductCard(product, onOpen = { onOpen(product.id) }, onAdd = { onAdd(product) })
+                        overlay(product)
+                    }
                 }
             }
             when (val append = items.loadState.append) {
