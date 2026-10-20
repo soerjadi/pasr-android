@@ -88,4 +88,14 @@
     <string name="checkout_submitting">Memproses…</string>
     <string name="checkout_has_issues">Ada produk yang perlu diperiksa di keranjang.</string>
     <string name="checkout_line">%1$d × %2$s</string>
+
+    <string name="confirm_title">Pesanan Berhasil!</string>
+    <string name="confirm_number_label">Nomor Pesanan</string>
+    <string name="confirm_message">Pesanan Anda sedang diproses oleh penjual.</string>
+    <string name="confirm_view_order">Lihat Pesanan</string>
+    <string name="confirm_home">Kembali ke Beranda</string>
+    <string name="tracking_title">Tracking Pesanan</string>
+    <string name="tracking_total">Total %1$s</string>
+    <string name="tracking_chat">Chat dengan penjual</string>
+    <string name="tracking_items_title">Barang</string>
 </resources>

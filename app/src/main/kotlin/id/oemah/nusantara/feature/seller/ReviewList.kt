@@ -20,6 +20,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import id.oemah.nusantara.R
 import id.oemah.nusantara.api.model.Review
+import id.oemah.nusantara.core.DateFormat
 import id.oemah.nusantara.core.asAppError
 import id.oemah.nusantara.ui.components.ErrorPanel
 import id.oemah.nusantara.ui.components.Skeleton
@@ -40,6 +41,7 @@ fun ReviewList(items: LazyPagingItems<Review>, modifier: Modifier = Modifier) {
                 items[index]?.let { review ->
                     Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                         Text(review.authorName, style = MaterialTheme.typography.titleSmall)
+                        Text(DateFormat.date(review.createdAt), style = MaterialTheme.typography.bodySmall)
                         Text("★".repeat(review.rating), color = MaterialTheme.colorScheme.secondary)
                         review.text?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
                         HorizontalDivider(Modifier.padding(top = 8.dp))

@@ -16,6 +16,8 @@ import id.oemah.nusantara.feature.cart.CartRoute
 import id.oemah.nusantara.feature.categories.CategoriesRoute
 import id.oemah.nusantara.feature.checkout.CheckoutRoute
 import id.oemah.nusantara.feature.home.HomeRoute
+import id.oemah.nusantara.feature.orders.ConfirmationRoute
+import id.oemah.nusantara.feature.orders.TrackingRoute
 import id.oemah.nusantara.feature.products.ProductListRoute
 import id.oemah.nusantara.feature.products.SearchRoute
 import id.oemah.nusantara.feature.products.detail.ProductDetailRoute
@@ -84,6 +86,13 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
             onLoginRequired = { navController.navigate(Route.Login) },
         )
     }
+    composable<Route.OrderConfirmation> {
+        ConfirmationRoute(
+            onViewOrder = { navController.navigate(Route.OrderTracking(it)) },
+            onHome = { navController.popBackStack(Route.Home, inclusive = false) },
+        )
+    }
+    composable<Route.OrderTracking> { TrackingRoute(onBack = { navController.popBackStack() }) }
     composable<Route.Orders> { Placeholder(stringResource(R.string.tab_orders)) }
     composable<Route.Favorites> { Placeholder(stringResource(R.string.tab_favorites)) }
     composable<Route.Account> { Placeholder(stringResource(R.string.tab_account)) }
