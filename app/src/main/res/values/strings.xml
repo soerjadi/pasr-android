@@ -52,4 +52,13 @@
     <string name="detail_halal_badge">Halal ID</string>
     <string name="detail_favorite_add">Tambah ke favorit</string>
     <string name="detail_favorite_remove">Hapus dari favorit</string>
+
+    <string name="seller_follow">Ikuti</string>
+    <string name="seller_following">Mengikuti</string>
+    <string name="seller_followers">%1$d pengikut</string>
+    <string name="seller_tab_products">Produk</string>
+    <string name="seller_tab_reviews">Ulasan</string>
+    <string name="seller_chat">Chat dengan penjual</string>
+    <string name="seller_reviews_empty">Belum ada ulasan</string>
+    <string name="seller_products_empty">Belum ada produk</string>
 </resources>
