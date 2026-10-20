@@ -1,0 +1,37 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Keripik Tempe",
+      "sellerId": 1,
+      "sellerName": "Bu Siti",
+      "price": 15000,
+      "image": {
+        "small": "https://placehold.co/320x320/E3F1E4/1B5E20/png?text=Keripik+Tempe",
+        "medium": "https://placehold.co/640x640/E3F1E4/1B5E20/png?text=Keripik+Tempe",
+        "large": "https://placehold.co/1080x1080/E3F1E4/1B5E20/png?text=Keripik+Tempe"
+      },
+      "rating": 4.8,
+      "ratingCount": 120,
+      "stock": 25,
+      "halalVerified": true
+    },
+    {
+      "id": 2,
+      "name": "Madu Hutan",
+      "sellerId": 2,
+      "sellerName": "Pak Slamet",
+      "price": 45000,
+      "image": {
+        "small": "https://placehold.co/320x320/E3F1E4/1B5E20/png?text=Madu+Hutan",
+        "medium": "https://placehold.co/640x640/E3F1E4/1B5E20/png?text=Madu+Hutan",
+        "large": "https://placehold.co/1080x1080/E3F1E4/1B5E20/png?text=Madu+Hutan"
+      },
+      "rating": 4.9,
+      "ratingCount": 88,
+      "stock": 12,
+      "halalVerified": true
+    }
+  ],
+  "nextCursor": null
+}

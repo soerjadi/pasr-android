@@ -1,0 +1,162 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "number": "NM-20261015-001",
+      "status": "READY_FOR_PICKUP",
+      "createdAt": "2026-10-15T03:02:00Z",
+      "total": 80000,
+      "paymentMethod": "CASH_AT_PICKUP",
+      "sellerOrders": [
+        {
+          "id": 1,
+          "sellerId": 1,
+          "sellerName": "Bu Siti",
+          "whatsapp": "+6281234567889",
+          "pickupAddress": "Jl. Merdeka No. 11, Simo, Boyolali",
+          "openingHours": "Setiap hari 07.00 - 17.00",
+          "status": "READY_FOR_PICKUP",
+          "subtotal": 15000,
+          "items": [
+            {
+              "id": 1,
+              "productId": 1,
+              "name": "Keripik Tempe",
+              "image": {
+                "small": "https://placehold.co/320x320/E3F1E4/1B5E20/png?text=Keripik+Tempe",
+                "medium": "https://placehold.co/640x640/E3F1E4/1B5E20/png?text=Keripik+Tempe",
+                "large": "https://placehold.co/1080x1080/E3F1E4/1B5E20/png?text=Keripik+Tempe"
+              },
+              "quantity": 1,
+              "unitPrice": 15000,
+              "lineTotal": 15000,
+              "reviewed": false
+            }
+          ],
+          "note": "Siap diambil mulai jam 14.00"
+        },
+        {
+          "id": 2,
+          "sellerId": 2,
+          "sellerName": "Pak Slamet",
+          "whatsapp": "+6281234567888",
+          "pickupAddress": "Jl. Merdeka No. 12, Simo, Boyolali",
+          "openingHours": "Setiap hari 07.00 - 17.00",
+          "status": "READY_FOR_PICKUP",
+          "subtotal": 45000,
+          "items": [
+            {
+              "id": 2,
+              "productId": 2,
+              "name": "Madu Hutan",
+              "image": {
+                "small": "https://placehold.co/320x320/E3F1E4/1B5E20/png?text=Madu+Hutan",
+                "medium": "https://placehold.co/640x640/E3F1E4/1B5E20/png?text=Madu+Hutan",
+                "large": "https://placehold.co/1080x1080/E3F1E4/1B5E20/png?text=Madu+Hutan"
+              },
+              "quantity": 1,
+              "unitPrice": 45000,
+              "lineTotal": 45000,
+              "reviewed": false
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "sellerId": 3,
+          "sellerName": "Bu Rini",
+          "whatsapp": "+6281234567887",
+          "pickupAddress": "Jl. Merdeka No. 13, Simo, Boyolali",
+          "openingHours": "Setiap hari 07.00 - 17.00",
+          "status": "READY_FOR_PICKUP",
+          "subtotal": 20000,
+          "items": [
+            {
+              "id": 3,
+              "productId": 3,
+              "name": "Dodol Simo",
+              "image": {
+                "small": "https://placehold.co/320x320/E3F1E4/1B5E20/png?text=Dodol+Simo",
+                "medium": "https://placehold.co/640x640/E3F1E4/1B5E20/png?text=Dodol+Simo",
+                "large": "https://placehold.co/1080x1080/E3F1E4/1B5E20/png?text=Dodol+Simo"
+              },
+              "quantity": 1,
+              "unitPrice": 20000,
+              "lineTotal": 20000,
+              "reviewed": false
+            }
+          ]
+        }
+      ],
+      "statusHistory": [
+        {
+          "status": "CREATED",
+          "at": "2026-10-15T03:02:00Z"
+        },
+        {
+          "status": "SELLER_PROCESSING",
+          "at": "2026-10-15T04:02:00Z"
+        },
+        {
+          "status": "READY_FOR_PICKUP",
+          "at": "2026-10-15T06:30:00Z"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "number": "NM-20261012-008",
+      "status": "COMPLETED",
+      "createdAt": "2026-10-12T02:10:00Z",
+      "total": 30000,
+      "paymentMethod": "CASH_AT_PICKUP",
+      "sellerOrders": [
+        {
+          "id": 4,
+          "sellerId": 1,
+          "sellerName": "Bu Siti",
+          "whatsapp": "+6281234567889",
+          "pickupAddress": "Jl. Merdeka No. 11, Simo, Boyolali",
+          "openingHours": "Setiap hari 07.00 - 17.00",
+          "status": "COMPLETED",
+          "subtotal": 30000,
+          "items": [
+            {
+              "id": 4,
+              "productId": 1,
+              "name": "Keripik Tempe",
+              "image": {
+                "small": "https://placehold.co/320x320/E3F1E4/1B5E20/png?text=Keripik+Tempe",
+                "medium": "https://placehold.co/640x640/E3F1E4/1B5E20/png?text=Keripik+Tempe",
+                "large": "https://placehold.co/1080x1080/E3F1E4/1B5E20/png?text=Keripik+Tempe"
+              },
+              "quantity": 2,
+              "unitPrice": 15000,
+              "lineTotal": 30000,
+              "reviewed": false
+            }
+          ]
+        }
+      ],
+      "statusHistory": [
+        {
+          "status": "CREATED",
+          "at": "2026-10-12T02:10:00Z"
+        },
+        {
+          "status": "SELLER_PROCESSING",
+          "at": "2026-10-12T03:00:00Z"
+        },
+        {
+          "status": "READY_FOR_PICKUP",
+          "at": "2026-10-12T05:00:00Z"
+        },
+        {
+          "status": "COMPLETED",
+          "at": "2026-10-13T01:00:00Z"
+        }
+      ]
+    }
+  ],
+  "nextCursor": null
+}

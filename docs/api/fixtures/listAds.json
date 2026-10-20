@@ -1,0 +1,17 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "placement": "home_partner_carousel",
+      "title": "KUR Bank BRI",
+      "subtitle": "Modal usaha untuk UMKM dengan bunga ringan",
+      "image": {
+        "small": "https://placehold.co/320x320/DCE9F7/1B5E20/png?text=KUR+BRI",
+        "medium": "https://placehold.co/640x640/DCE9F7/1B5E20/png?text=KUR+BRI",
+        "large": "https://placehold.co/1080x1080/DCE9F7/1B5E20/png?text=KUR+BRI"
+      },
+      "targetUrl": "https://bri.co.id",
+      "label": "Kemitraan"
+    }
+  ]
+}

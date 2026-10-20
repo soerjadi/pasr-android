@@ -1,0 +1,9 @@
+{
+  "accessToken": "demo-access-token-2",
+  "refreshToken": "demo-refresh-token-2",
+  "user": {
+    "id": 1,
+    "phone": "+6281234567890",
+    "name": "Suryadi Sulaksono"
+  }
+}

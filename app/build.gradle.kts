@@ -54,6 +54,15 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    sourceSets {
+        // Demo flavor ships the shared API fixtures (docs/api/fixtures) as classpath resources.
+        getByName("demo") { resources.directories.add(rootProject.file("../docs/api").path) }
+    }
+
+    packaging {
+        resources { excludes += "/openapi.yaml" }
+    }
+
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
