@@ -1,0 +1,15 @@
+# Gradle / Android
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+.DS_Store
+google-services.json
+*.keystore
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Superpowers scratch workspace
+.superpowers/
