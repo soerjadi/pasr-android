@@ -126,4 +126,13 @@
     <string name="profile_close">Tutup</string>
     <string name="push_channel_name">Status pesanan</string>
     <string name="push_default_title">Pesanan Anda</string>
+
+    <string name="splash_tagline">Dari Lokal, Untuk Semua</string>
+    <string name="onboarding_skip">Lewati</string>
+    <string name="onboarding_next">Lanjut</string>
+    <string name="onboarding_start">Mulai</string>
+    <string name="onboarding_1_title">Temukan Produk UMKM Lokal</string>
+    <string name="onboarding_1_body">Jelajahi berbagai produk unggulan dari pelaku UMKM di Simo, Boyolali.</string>
+    <string name="onboarding_2_title">Pesan, lalu Ambil di Toko</string>
+    <string name="onboarding_2_body">Pesan langsung ke penjual, lalu ambil dan bayar di toko saat pesanan siap.</string>
 </resources>

@@ -17,6 +17,7 @@ import id.oemah.nusantara.feature.cart.CartRoute
 import id.oemah.nusantara.feature.categories.CategoriesRoute
 import id.oemah.nusantara.feature.checkout.CheckoutRoute
 import id.oemah.nusantara.feature.home.HomeRoute
+import id.oemah.nusantara.feature.onboarding.OnboardingRoute
 import id.oemah.nusantara.feature.orders.ConfirmationRoute
 import id.oemah.nusantara.feature.orders.TrackingRoute
 import id.oemah.nusantara.feature.orders.history.OrderHistoryRoute
@@ -30,6 +31,11 @@ import id.oemah.nusantara.feature.social.FavoritesRoute
 
 /** Every real destination of the app. Later features register their screens here. */
 fun NavGraphBuilder.appGraph(navController: NavHostController) {
+    composable<Route.Onboarding> {
+        OnboardingRoute(
+            onFinish = { navController.navigate(Route.Home) { popUpTo(Route.Onboarding) { inclusive = true } } },
+        )
+    }
     composable<Route.Home> {
         val featuredTitle = stringResource(R.string.home_featured)
         HomeRoute(

@@ -40,6 +40,7 @@ enum class BottomTab(val route: Route, @StringRes val label: Int, val icon: Imag
 fun AppNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    startDestination: Route = Route.Home,
     graph: NavGraphBuilder.() -> Unit,
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -72,7 +73,7 @@ fun AppNavHost(
     ) { padding ->
         NavHost(
             navController = navController,
-            startDestination = Route.Home,
+            startDestination = startDestination,
             modifier = Modifier.padding(padding),
             builder = graph,
         )
