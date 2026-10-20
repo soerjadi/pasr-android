@@ -12,3 +12,8 @@ fun ProductSummary.toCartSnapshot() = CartProductSnapshot(
     imageUrl = image.small,
     unitPrice = Rupiah(price),
 )
+
+/** Adds one of [product]; a sold-out product is ignored. */
+suspend fun CartRepository.addProduct(product: ProductSummary) {
+    if (product.stock > 0) add(product.toCartSnapshot())
+}

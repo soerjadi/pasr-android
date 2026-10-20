@@ -8,3 +8,5 @@ sealed class AppError(message: String? = null, cause: Throwable? = null) : Excep
     data class Rejected(val code: String, override val message: String?) : AppError()
     class Unknown(cause: Throwable?) : AppError(cause?.message, cause)
 }
+
+fun Throwable.asAppError(): AppError = this as? AppError ?: AppError.Unknown(this)

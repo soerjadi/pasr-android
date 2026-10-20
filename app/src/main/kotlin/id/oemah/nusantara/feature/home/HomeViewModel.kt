@@ -12,7 +12,7 @@ import id.oemah.nusantara.feature.ads.AdPlacement
 import id.oemah.nusantara.feature.ads.AdsRepository
 import id.oemah.nusantara.feature.ads.adsOrEmpty
 import id.oemah.nusantara.feature.cart.CartRepository
-import id.oemah.nusantara.feature.cart.toCartSnapshot
+import id.oemah.nusantara.feature.cart.addProduct
 import id.oemah.nusantara.feature.catalog.CatalogRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,7 +58,6 @@ class HomeViewModel @Inject constructor(
     }
 
     fun addToCart(product: ProductSummary) {
-        if (product.stock <= 0) return
-        viewModelScope.launch { cart.add(product.toCartSnapshot()) }
+        viewModelScope.launch { cart.addProduct(product) }
     }
 }

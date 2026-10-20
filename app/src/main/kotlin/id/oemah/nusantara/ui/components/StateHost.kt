@@ -57,7 +57,7 @@ fun Skeleton(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun ErrorPanel(message: String, onRetry: () -> Unit) {
+fun ErrorPanel(message: String, onRetry: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize().padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),

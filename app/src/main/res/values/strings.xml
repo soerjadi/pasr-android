@@ -39,4 +39,8 @@
     <string name="home_more_categories">Lainnya</string>
     <string name="home_empty_featured">Belum ada produk.</string>
     <string name="categories_title">Kategori</string>
+
+    <string name="back">Kembali</string>
+    <string name="products_empty">Produk tidak ditemukan</string>
+    <string name="search_idle">Ketik untuk mencari produk</string>
 </resources>

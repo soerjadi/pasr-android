@@ -13,5 +13,5 @@ sealed interface UiEvent {
 
 fun <T> Result<T>.toUiState(): UiState<T> = fold(
     onSuccess = { UiState.Content(it) },
-    onFailure = { UiState.Error(it as? AppError ?: AppError.Unknown(it)) },
+    onFailure = { UiState.Error(it.asAppError()) },
 )
