@@ -9,4 +9,8 @@
     <string name="tab_account">Akun</string>
 
     <string name="placeholder_screen">Halaman %1$s</string>
+
+    <string name="quantity_decrease">Kurangi jumlah</string>
+    <string name="quantity_increase">Tambah jumlah</string>
+    <string name="retry">Coba lagi</string>
 </resources>
