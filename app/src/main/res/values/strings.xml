@@ -13,4 +13,14 @@
     <string name="quantity_decrease">Kurangi jumlah</string>
     <string name="quantity_increase">Tambah jumlah</string>
     <string name="retry">Coba lagi</string>
+
+    <string name="login_title">Masuk</string>
+    <string name="login_phone_label">Nomor HP</string>
+    <string name="login_phone_hint">0812 3456 7890</string>
+    <string name="login_send_code">Kirim Kode</string>
+    <string name="login_code_sent">Kode verifikasi dikirim ke %1$s</string>
+    <string name="login_code_label">Kode verifikasi</string>
+    <string name="login_submit">Masuk</string>
+    <string name="login_resend">Kirim ulang kode</string>
+    <string name="login_resend_in">Kirim ulang dalam %1$d detik</string>
 </resources>

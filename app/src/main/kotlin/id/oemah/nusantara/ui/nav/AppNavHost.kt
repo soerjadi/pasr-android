@@ -29,6 +29,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import id.oemah.nusantara.R
+import id.oemah.nusantara.feature.auth.LoginRoute
 
 enum class BottomTab(val route: Route, @StringRes val label: Int, val icon: ImageVector) {
     Home(Route.Home, R.string.tab_home, Icons.Default.Home),
@@ -78,6 +79,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             composable<Route.Orders> { Placeholder(stringResource(R.string.tab_orders)) }
             composable<Route.Favorites> { Placeholder(stringResource(R.string.tab_favorites)) }
             composable<Route.Account> { Placeholder(stringResource(R.string.tab_account)) }
+            composable<Route.Login> { LoginRoute(onLoggedIn = { navController.popBackStack() }) }
         }
     }
 }
