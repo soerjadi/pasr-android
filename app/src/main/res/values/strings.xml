@@ -25,4 +25,18 @@
     <string name="login_resend_in">Kirim ulang dalam %1$d detik</string>
 
     <string name="ad_label_fallback">Iklan</string>
+
+    <string name="product_sold_out">Habis</string>
+    <string name="product_add_to_cart_description">Tambah ke keranjang</string>
+
+    <string name="home_location">Simo, Boyolali</string>
+    <string name="home_search_hint">Cari produk…</string>
+    <string name="home_hero_kicker">Oleh-oleh Khas Simo</string>
+    <string name="home_hero_title">Rasa Tradisional, Kualitas Terbaik</string>
+    <string name="home_hero_action">Lihat Semua</string>
+    <string name="home_partners">Mitra Unggulan</string>
+    <string name="home_featured">Produk Pilihan</string>
+    <string name="home_more_categories">Lainnya</string>
+    <string name="home_empty_featured">Belum ada produk.</string>
+    <string name="categories_title">Kategori</string>
 </resources>

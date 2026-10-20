@@ -71,6 +71,20 @@ class CatalogRepositoryTest {
         assertEquals(listOf(20), limits)
     }
 
+    @Test fun featured_products_are_the_first_page_of_featured_items_only() = runTest {
+        data class Call(val featured: Boolean?, val cursor: String?, val limit: Int?)
+        val calls = mutableListOf<Call>()
+        coEvery { api.listProducts(any(), any(), any(), any(), any(), any()) } answers {
+            calls += Call(featured = thirdArg(), cursor = arg(4), limit = arg(5))
+            Response.success(ProductPage(items = listOf(product(1), product(2)), nextCursor = "more"))
+        }
+
+        val items = repo.featuredProducts().getOrThrow()
+
+        assertEquals(listOf(1L, 2L), items.map { it.id })
+        assertEquals(listOf(Call(featured = true, cursor = null, limit = 8)), calls)
+    }
+
     @Test fun categories_are_unwrapped_from_the_list() = runTest {
         coEvery { api.listCategories() } returns Response.success(CategoryList(listOf(Category(1, "Makanan & Minuman", "food"))))
 

@@ -26,6 +26,9 @@ data class ProductQuery(
 
 interface CatalogRepository {
     suspend fun categories(): Result<List<Category>>
+
+    /** First page of featured products ("Produk Pilihan" on Home), not a paged list. */
+    suspend fun featuredProducts(): Result<List<ProductSummary>>
     fun products(query: ProductQuery): Flow<PagingData<ProductSummary>>
     suspend fun product(id: Long): Result<ProductDetail>
     suspend fun seller(id: Long): Result<SellerDetail>
@@ -34,6 +37,9 @@ interface CatalogRepository {
 
 class DefaultCatalogRepository @Inject constructor(private val api: CatalogApi) : CatalogRepository {
     override suspend fun categories(): Result<List<Category>> = apiCall { api.listCategories() }.map { it.items }
+
+    override suspend fun featuredProducts(): Result<List<ProductSummary>> =
+        apiCall { api.listProducts(featured = true, limit = FEATURED_COUNT) }.map { it.items }
 
     override fun products(query: ProductQuery): Flow<PagingData<ProductSummary>> = cursorPager { cursor, limit ->
         apiCall {
@@ -56,6 +62,8 @@ class DefaultCatalogRepository @Inject constructor(private val api: CatalogApi) 
         apiCall { api.listSellerReviews(sellerId, cursor, limit) }.map { CursorPage(it.items, it.nextCursor) }
     }
 }
+
+private const val FEATURED_COUNT = 8
 
 @Module
 @InstallIn(SingletonComponent::class)

@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import id.oemah.nusantara.ui.nav.AppNavHost
+import id.oemah.nusantara.ui.nav.appGraph
 import id.oemah.nusantara.ui.theme.NusantaraTheme
 
 @AndroidEntryPoint
@@ -14,7 +15,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NusantaraTheme {
-                AppNavHost(navController = rememberNavController())
+                val navController = rememberNavController()
+                AppNavHost(navController = navController) { appGraph(navController) }
             }
         }
     }

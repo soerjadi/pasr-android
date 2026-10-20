@@ -1,8 +1,6 @@
 package id.oemah.nusantara.ui.nav
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
@@ -17,19 +15,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import id.oemah.nusantara.R
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import id.oemah.nusantara.R
-import id.oemah.nusantara.feature.auth.LoginRoute
 
 enum class BottomTab(val route: Route, @StringRes val label: Int, val icon: ImageVector) {
     Home(Route.Home, R.string.tab_home, Icons.Default.Home),
@@ -39,8 +35,13 @@ enum class BottomTab(val route: Route, @StringRes val label: Int, val icon: Imag
     Account(Route.Account, R.string.tab_account, Icons.Default.Person),
 }
 
+/** The tab shell (bottom bar + NavHost). The destinations come from [graph]. */
 @Composable
-fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+fun AppNavHost(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    graph: NavGraphBuilder.() -> Unit,
+) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val destination = backStackEntry?.destination
     val onTab = BottomTab.entries.any { tab -> destination?.hasRoute(tab.route::class) == true }
@@ -73,20 +74,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             navController = navController,
             startDestination = Route.Home,
             modifier = Modifier.padding(padding),
-        ) {
-            composable<Route.Home> { Placeholder(stringResource(R.string.tab_home)) }
-            composable<Route.Categories> { Placeholder(stringResource(R.string.tab_categories)) }
-            composable<Route.Orders> { Placeholder(stringResource(R.string.tab_orders)) }
-            composable<Route.Favorites> { Placeholder(stringResource(R.string.tab_favorites)) }
-            composable<Route.Account> { Placeholder(stringResource(R.string.tab_account)) }
-            composable<Route.Login> { LoginRoute(onLoggedIn = { navController.popBackStack() }) }
-        }
-    }
-}
-
-@Composable
-private fun Placeholder(name: String) {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(stringResource(R.string.placeholder_screen, name))
+            builder = graph,
+        )
     }
 }
