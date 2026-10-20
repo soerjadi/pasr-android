@@ -16,6 +16,7 @@ import id.oemah.nusantara.feature.categories.CategoriesRoute
 import id.oemah.nusantara.feature.home.HomeRoute
 import id.oemah.nusantara.feature.products.ProductListRoute
 import id.oemah.nusantara.feature.products.SearchRoute
+import id.oemah.nusantara.feature.products.detail.ProductDetailRoute
 
 /** Every real destination of the app. Later features register their screens here. */
 fun NavGraphBuilder.appGraph(navController: NavHostController) {
@@ -42,6 +43,13 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
         SearchRoute(
             onBack = { navController.popBackStack() },
             onOpenProduct = { navController.navigate(Route.ProductDetail(it)) },
+        )
+    }
+    composable<Route.ProductDetail> {
+        ProductDetailRoute(
+            onBack = { navController.popBackStack() },
+            onOpenSeller = { navController.navigate(Route.Seller(it)) },
+            onLoginRequired = { navController.navigate(Route.Login) },
         )
     }
     composable<Route.Orders> { Placeholder(stringResource(R.string.tab_orders)) }

@@ -43,4 +43,13 @@
     <string name="back">Kembali</string>
     <string name="products_empty">Produk tidak ditemukan</string>
     <string name="search_idle">Ketik untuk mencari produk</string>
+
+    <string name="detail_pickup_title">Ambil di Toko</string>
+    <string name="detail_stock">Stok: %1$d</string>
+    <string name="detail_rating">★ %1$s (%2$d ulasan)</string>
+    <string name="detail_add_to_cart">Tambah ke Keranjang</string>
+    <string name="detail_sold_out">Stok habis</string>
+    <string name="detail_halal_badge">Halal ID</string>
+    <string name="detail_favorite_add">Tambah ke favorit</string>
+    <string name="detail_favorite_remove">Hapus dari favorit</string>
 </resources>
