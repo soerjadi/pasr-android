@@ -97,7 +97,6 @@
     <string name="tracking_title">Tracking Pesanan</string>
     <string name="tracking_total">Total %1$s</string>
     <string name="tracking_chat">Chat dengan penjual</string>
-    <string name="tracking_items_title">Barang</string>
 
     <string name="orders_title">Pesanan Saya</string>
     <string name="orders_login_prompt">Masuk untuk melihat pesanan Anda</string>

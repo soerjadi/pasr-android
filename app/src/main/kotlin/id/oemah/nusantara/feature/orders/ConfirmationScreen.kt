@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -53,25 +54,31 @@ fun ConfirmationScreen(
     onHome: () -> Unit,
     onOpenLink: (String) -> Unit,
 ) {
-    Column(
-        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        Box(Modifier.size(72.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary), contentAlignment = Alignment.Center) {
-            Text("✓", color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.headlineMedium)
+    Column(Modifier.fillMaxSize()) {
+        Column(
+            Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Box(Modifier.size(72.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary), contentAlignment = Alignment.Center) {
+                Text("\u2713", color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.headlineMedium)
+            }
+            Text(stringResource(R.string.confirm_title), style = MaterialTheme.typography.headlineSmall)
+            Text(stringResource(R.string.confirm_number_label), style = MaterialTheme.typography.bodySmall)
+            Text("#${order.number}", style = MaterialTheme.typography.titleLarge)
+            Text(stringResource(R.string.confirm_message), textAlign = TextAlign.Center)
+            Text(stringResource(R.string.checkout_cash), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+
+            order.sellerOrders.forEach { SellerOrderCard(it, onOpenLink) }
+
+            AdSlot(postPurchaseAds, onOpen = onOpenLink)
         }
-        Text(stringResource(R.string.confirm_title), style = MaterialTheme.typography.headlineSmall)
-        Text(stringResource(R.string.confirm_number_label), style = MaterialTheme.typography.bodySmall)
-        Text("#${order.number}", style = MaterialTheme.typography.titleLarge)
-        Text(stringResource(R.string.confirm_message), textAlign = TextAlign.Center)
-        Text(stringResource(R.string.checkout_cash), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
-
-        order.sellerOrders.forEach { SellerOrderCard(it, onOpenLink) }
-
-        AdSlot(postPurchaseAds, onOpen = onOpenLink)
-
-        PrimaryButton(text = stringResource(R.string.confirm_view_order), onClick = onViewOrder, modifier = Modifier.fillMaxWidth())
-        OutlinedButton(onClick = onHome, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.confirm_home)) }
+        // Pinned, so the next step is never pushed off-screen by a long list of sellers.
+        Surface(shadowElevation = 8.dp) {
+            Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                PrimaryButton(text = stringResource(R.string.confirm_view_order), onClick = onViewOrder, modifier = Modifier.fillMaxWidth())
+                OutlinedButton(onClick = onHome, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.confirm_home)) }
+            }
+        }
     }
 }

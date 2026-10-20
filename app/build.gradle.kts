@@ -61,6 +61,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        // java.time is API 26+; minSdk is 24.
+        isCoreLibraryDesugaringEnabled = true
     }
 
     sourceSets {
@@ -138,6 +140,7 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
@@ -166,6 +169,9 @@ dependencies {
     testImplementation(platform(libs.compose.bom))
     testImplementation(libs.compose.ui.test.junit4)
     testImplementation(libs.mockk)
+    testImplementation(libs.hilt.android.testing)
+    testImplementation(libs.coil.test)
+    kspTest(libs.hilt.compiler)
     testImplementation(libs.androidx.paging.testing)
     testImplementation(libs.okhttp.mockwebserver)
     testImplementation(libs.turbine)
