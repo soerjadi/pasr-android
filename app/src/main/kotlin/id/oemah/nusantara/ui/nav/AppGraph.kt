@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import id.oemah.nusantara.R
 import id.oemah.nusantara.feature.auth.LoginRoute
 import id.oemah.nusantara.feature.cart.CartRoute
@@ -20,6 +21,7 @@ import id.oemah.nusantara.feature.orders.ConfirmationRoute
 import id.oemah.nusantara.feature.orders.TrackingRoute
 import id.oemah.nusantara.feature.orders.history.OrderHistoryRoute
 import id.oemah.nusantara.feature.products.ProductListRoute
+import id.oemah.nusantara.feature.profile.ProfileRoute
 import id.oemah.nusantara.feature.products.SearchRoute
 import id.oemah.nusantara.feature.products.detail.ProductDetailRoute
 import id.oemah.nusantara.feature.review.WriteReviewRoute
@@ -95,7 +97,9 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
             onHome = { navController.popBackStack(Route.Home, inclusive = false) },
         )
     }
-    composable<Route.OrderTracking> {
+    composable<Route.OrderTracking>(
+        deepLinks = listOf(navDeepLink<Route.OrderTracking>(basePath = "nusantara://order")),
+    ) {
         TrackingRoute(
             onBack = { navController.popBackStack() },
             onReview = { itemId, name -> navController.navigate(Route.WriteReview(itemId, name)) },
@@ -114,7 +118,12 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
         )
     }
     composable<Route.WriteReview> { WriteReviewRoute(onClose = { navController.popBackStack() }) }
-    composable<Route.Account> { Placeholder(stringResource(R.string.tab_account)) }
+    composable<Route.Account> {
+        ProfileRoute(
+            onOpenOrders = { navController.navigate(Route.Orders) { launchSingleTop = true } },
+            onLogin = { navController.navigate(Route.Login) },
+        )
+    }
     composable<Route.Login> { LoginRoute(onLoggedIn = { navController.popBackStack() }) }
 }
 

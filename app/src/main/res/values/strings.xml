@@ -111,4 +111,19 @@
     <string name="review_hint">Ceritakan pengalaman Anda (opsional)</string>
     <string name="review_submit">Kirim Ulasan</string>
     <string name="review_action">Beri ulasan</string>
+
+    <string name="profile_guest">Masuk untuk melihat akun Anda</string>
+    <string name="profile_no_name">Tanpa nama</string>
+    <string name="profile_edit_name">Ubah nama</string>
+    <string name="profile_name_label">Nama</string>
+    <string name="profile_my_orders">Pesanan Saya</string>
+    <string name="profile_help">Bantuan &amp; FAQ</string>
+    <string name="profile_about">Tentang Aplikasi</string>
+    <string name="profile_about_text">Nusantara %1$s\nDari Lokal, Untuk Semua</string>
+    <string name="profile_logout">Keluar</string>
+    <string name="profile_save">Simpan</string>
+    <string name="profile_cancel">Batal</string>
+    <string name="profile_close">Tutup</string>
+    <string name="push_channel_name">Status pesanan</string>
+    <string name="push_default_title">Pesanan Anda</string>
 </resources>

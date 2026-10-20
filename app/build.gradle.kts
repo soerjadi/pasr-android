@@ -9,6 +9,8 @@ plugins {
     alias(libs.plugins.openapi.generator)
 }
 
+fun prop(name: String): String = providers.gradleProperty(name).getOrElse("")
+
 android {
     namespace = "id.oemah.nusantara"
     compileSdk = 37
@@ -27,12 +29,19 @@ android {
             dimension = "env"
             applicationIdSuffix = ".demo"
             buildConfigField("String", "API_BASE_URL", "\"http://localhost/\"")
+            buildConfigField("String", "SUPPORT_WHATSAPP", "\"${prop("nusantara.supportWhatsapp")}\"")
         }
         create("live") {
             dimension = "env"
             val baseUrl = providers.gradleProperty("nusantara.apiBaseUrl")
                 .getOrElse("https://api.invalid/")
             buildConfigField("String", "API_BASE_URL", "\"$baseUrl\"")
+            buildConfigField("String", "SUPPORT_WHATSAPP", "\"${prop("nusantara.supportWhatsapp")}\"")
+            // Push (FCM) is configured here instead of google-services.json; blank means push is off.
+            buildConfigField("String", "FIREBASE_APP_ID", "\"${prop("nusantara.firebase.appId")}\"")
+            buildConfigField("String", "FIREBASE_API_KEY", "\"${prop("nusantara.firebase.apiKey")}\"")
+            buildConfigField("String", "FIREBASE_PROJECT_ID", "\"${prop("nusantara.firebase.projectId")}\"")
+            buildConfigField("String", "FIREBASE_SENDER_ID", "\"${prop("nusantara.firebase.senderId")}\"")
         }
     }
 
@@ -125,6 +134,8 @@ dependencies {
     implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.okhttp)
     implementation(libs.androidx.datastore.preferences)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.messaging)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(platform(libs.compose.bom))

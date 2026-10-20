@@ -1,6 +1,12 @@
 package id.oemah.nusantara.feature.checkout
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -55,8 +61,17 @@ fun CheckoutRoute(
             }
         }
     }
+    val askNotifications = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { }
     LaunchedEffect(submission) {
-        if (submission is Submission.Placed) onPlaced(submission.order.id)
+        if (submission is Submission.Placed) {
+            // Ask when it matters (the user just ordered and will want to hear "siap diambil"), not at launch.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+            ) {
+                askNotifications.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+            onPlaced(submission.order.id)
+        }
     }
     CheckoutScreen(
         review = review,
