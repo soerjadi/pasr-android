@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import id.oemah.nusantara.feature.onboarding.OnboardingViewModel
 import id.oemah.nusantara.feature.onboarding.SplashScreen
+import id.oemah.nusantara.feature.store.StoreBadgeViewModel
 import id.oemah.nusantara.ui.nav.AppNavHost
 import id.oemah.nusantara.ui.nav.Route
 import id.oemah.nusantara.ui.nav.appGraph
@@ -43,7 +44,8 @@ class MainActivity : ComponentActivity() {
                             addOnNewIntentListener(listener)
                             onDispose { removeOnNewIntentListener(listener) }
                         }
-                        AppNavHost(navController = navController, startDestination = startDestination) { appGraph(navController) }
+                        val newOrders = hiltViewModel<StoreBadgeViewModel>().newOrders.collectAsStateWithLifecycle().value
+                        AppNavHost(navController = navController, startDestination = startDestination, accountBadge = newOrders) { appGraph(navController) }
                     }
                 }
             }

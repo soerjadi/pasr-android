@@ -134,4 +134,74 @@
     <string name="onboarding_1_body">Jelajahi berbagai produk unggulan dari pelaku UMKM di Simo, Boyolali.</string>
     <string name="onboarding_2_title">Pesan, lalu Ambil di Toko</string>
     <string name="onboarding_2_body">Pesan langsung ke penjual, lalu ambil dan bayar di toko saat pesanan siap.</string>
+
+    <string name="store_widget_kicker">Toko saya · %1$s</string>
+    <string name="store_new_orders">%1$d pesanan baru menunggu</string>
+    <string name="store_no_new_orders">Belum ada pesanan baru</string>
+    <string name="store_accept_within">Terima dalam %1$s atau pesanan batal otomatis</string>
+    <string name="store_view_orders">Lihat pesanan</string>
+    <string name="store_seller_mode">Mode penjual</string>
+    <string name="store_open_seller_mode">Buka mode penjual</string>
+    <string name="store_my_store">Toko saya</string>
+    <string name="store_verified">Terverifikasi</string>
+    <string name="store_pending">Menunggu verifikasi</string>
+    <string name="store_mode_note">Kelola produk, pesanan, dan pengaturan toko. Kembali ke belanja kapan saja dari tombol Mode pembeli.</string>
+    <string name="store_cta_title">Punya usaha di Macan?</string>
+    <string name="store_cta_body">Buka toko gratis dan terima pesanan dari tetangga.</string>
+    <string name="store_cta_action">Buka toko gratis</string>
+    <string name="store_cta_note">Pakai akun yang sama. Tidak perlu daftar ulang atau pasang aplikasi lain.</string>
+
+    <string name="store_intro_title">Buka toko gratis di Pasar Macan</string>
+    <string name="store_intro_body">Pasang produkmu, terima pesanan dari tetangga, dan biarkan kurir lokal yang mengantar. Tanpa biaya daftar, tanpa biaya pasang produk.</string>
+    <string name="store_intro_steps">Cukup 3 langkah, sekitar 5 menit</string>
+    <string name="store_intro_step1_title">Daftar dengan nomor HP</string>
+    <string name="store_intro_step1_body">Kode OTP dikirim lewat WhatsApp atau SMS. Tanpa kata sandi.</string>
+    <string name="store_intro_step2_title">Isi data toko</string>
+    <string name="store_intro_step2_body">Nama, kelurahan, dan alamat. Selesai sekitar 3 menit.</string>
+    <string name="store_intro_step3_title">Pasang produk pertama</string>
+    <string name="store_intro_step3_body">Nama, harga, stok. Tokomu tampil setelah diperiksa admin.</string>
+    <string name="store_intro_login">Sudah punya toko? Masuk</string>
+    <string name="store_intro_footer">Khusus UMKM di kecamatan Macan</string>
+
+    <string name="store_form_title">Data toko</string>
+    <string name="store_form_step">Langkah 1 dari 2 · sekitar 3 menit</string>
+    <string name="store_form_name">Nama toko</string>
+    <string name="store_form_name_hint">Contoh: Warung Bu Sari</string>
+    <string name="store_form_category">Kategori</string>
+    <string name="store_form_category_hint">Pilih kategori</string>
+    <string name="store_form_owner">Nama pemilik</string>
+    <string name="store_form_phone">Nomor HP (terverifikasi OTP)</string>
+    <string name="store_form_kelurahan">Kelurahan</string>
+    <string name="store_form_kelurahan_hint">Pilih kelurahan di Macan</string>
+    <string name="store_form_address">Alamat dan patokan</string>
+    <string name="store_form_address_hint">RT/RW, nama jalan, patokan (mis. depan masjid)</string>
+    <string name="store_form_submit">Simpan dan lanjut</string>
+
+    <string name="product_form_title">Tambah produk</string>
+    <string name="product_form_step">Langkah 2 dari 2</string>
+    <string name="product_form_name">Nama produk</string>
+    <string name="product_form_name_hint">Contoh: Nasi pecel komplit</string>
+    <string name="product_form_price">Harga</string>
+    <string name="product_form_stock">Stok</string>
+    <string name="product_form_stock_less">Kurangi stok</string>
+    <string name="product_form_stock_more">Tambah stok</string>
+    <string name="product_form_submit">Simpan produk</string>
+    <string name="product_form_skip">Lewati dulu, tambah nanti</string>
+
+    <string name="seller_home_greeting">Halo, %1$s</string>
+    <string name="seller_home_buyer_mode">Mode pembeli</string>
+    <string name="seller_home_pending_title">Menunggu verifikasi</string>
+    <string name="seller_home_pending_body">Admin sedang memeriksa data tokomu. Sampai selesai, tokomu belum terlihat oleh pembeli. Kamu sudah bisa menambah produk.</string>
+    <string name="seller_home_status">Status tokomu</string>
+    <string name="seller_home_step_sent">Data toko terkirim</string>
+    <string name="seller_home_step_done">Selesai</string>
+    <string name="seller_home_step_review">Pemeriksaan admin</string>
+    <string name="seller_home_step_running">Sedang berjalan</string>
+    <string name="seller_home_step_listed">Toko tampil di Pasar Macan</string>
+    <string name="seller_home_step_after">Setelah disetujui</string>
+    <string name="seller_home_meanwhile">Sambil menunggu</string>
+    <string name="seller_home_add_product">Tambah produk</string>
+    <string name="seller_home_no_orders">Belum ada pesanan</string>
+    <string name="seller_home_no_orders_pending">Pesanan akan muncul di sini setelah tokomu terverifikasi.</string>
+    <string name="seller_home_no_orders_verified">Pesanan baru dari tetangga akan muncul di sini.</string>
 </resources>

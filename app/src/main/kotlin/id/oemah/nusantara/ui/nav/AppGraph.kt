@@ -11,6 +11,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
+import androidx.navigation.toRoute
 import id.oemah.nusantara.R
 import id.oemah.nusantara.feature.auth.LoginRoute
 import id.oemah.nusantara.feature.cart.CartRoute
@@ -28,6 +29,10 @@ import id.oemah.nusantara.feature.products.detail.ProductDetailRoute
 import id.oemah.nusantara.feature.review.WriteReviewRoute
 import id.oemah.nusantara.feature.seller.SellerRoute
 import id.oemah.nusantara.feature.social.FavoritesRoute
+import id.oemah.nusantara.feature.store.AddProductRoute
+import id.oemah.nusantara.feature.store.OpenStoreIntroRoute
+import id.oemah.nusantara.feature.store.SellerHomeRoute
+import id.oemah.nusantara.feature.store.StoreFormRoute
 
 /** Every real destination of the app. Later features register their screens here. */
 fun NavGraphBuilder.appGraph(navController: NavHostController) {
@@ -45,6 +50,7 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
             onOpenAllCategories = { navController.navigate(Route.Categories) { launchSingleTop = true } },
             onOpenProduct = { navController.navigate(Route.ProductDetail(it)) },
             onOpenCart = { navController.navigate(Route.Cart) },
+            onOpenSellerMode = { navController.navigate(Route.SellerMode) },
         )
     }
     composable<Route.Categories> {
@@ -128,7 +134,36 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
         ProfileRoute(
             onOpenOrders = { navController.navigate(Route.Orders) { launchSingleTop = true } },
             onLogin = { navController.navigate(Route.Login) },
+            onOpenStore = { navController.navigate(Route.OpenStore) },
+            onOpenSellerMode = { navController.navigate(Route.SellerMode) },
         )
+    }
+    composable<Route.OpenStore> {
+        OpenStoreIntroRoute(
+            onBack = { navController.popBackStack() },
+            onStart = { navController.navigate(Route.StoreForm) },
+            onLogin = { navController.navigate(Route.Login) },
+        )
+    }
+    composable<Route.StoreForm> {
+        StoreFormRoute(
+            onBack = { navController.popBackStack() },
+            // The store exists now: go on to the first product and drop the sign-up screens from the back stack.
+            onCreated = { navController.navigate(Route.AddProduct(onboarding = true)) { popUpTo(Route.OpenStore) { inclusive = true } } },
+        )
+    }
+    composable<Route.AddProduct> {
+        val onboarding = it.toRoute<Route.AddProduct>().onboarding
+        AddProductRoute(
+            onboarding = onboarding,
+            onBack = { navController.popBackStack() },
+            onDone = {
+                if (onboarding) navController.navigate(Route.SellerMode) { popUpTo<Route.AddProduct> { inclusive = true } } else navController.popBackStack()
+            },
+        )
+    }
+    composable<Route.SellerMode> {
+        SellerHomeRoute(onBack = { navController.popBackStack() }, onAddProduct = { navController.navigate(Route.AddProduct()) })
     }
     composable<Route.Login> { LoginRoute(onLoggedIn = { navController.popBackStack() }) }
 }

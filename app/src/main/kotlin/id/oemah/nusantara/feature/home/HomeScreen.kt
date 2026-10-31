@@ -38,11 +38,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.oemah.nusantara.R
 import id.oemah.nusantara.api.model.Category
 import id.oemah.nusantara.api.model.ProductSummary
+import id.oemah.nusantara.api.model.StoreSummary
 import id.oemah.nusantara.core.UiState
 import id.oemah.nusantara.feature.ads.AdSlot
 import id.oemah.nusantara.feature.ads.rememberLinkOpener
 import id.oemah.nusantara.feature.cart.CartButton
 import id.oemah.nusantara.feature.categories.emoji
+import id.oemah.nusantara.feature.store.StoreWidget
 import id.oemah.nusantara.ui.components.ProductCard
 import id.oemah.nusantara.ui.components.userMessage
 
@@ -54,11 +56,14 @@ fun HomeRoute(
     onOpenAllCategories: () -> Unit,
     onOpenProduct: (Long) -> Unit,
     onOpenCart: () -> Unit,
+    onOpenSellerMode: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     HomeScreen(
         state = state,
+        store = viewModel.store.collectAsStateWithLifecycle().value,
+        onOpenSellerMode = onOpenSellerMode,
         onSearch = onSearch,
         onOpenFeatured = onOpenFeatured,
         onOpenCategory = onOpenCategory,
@@ -74,6 +79,8 @@ fun HomeRoute(
 @Composable
 fun HomeScreen(
     state: HomeUiState,
+    store: StoreSummary?,
+    onOpenSellerMode: () -> Unit,
     onSearch: () -> Unit,
     onOpenFeatured: () -> Unit,
     onOpenCategory: (Category) -> Unit,
@@ -91,6 +98,7 @@ fun HomeScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         fullWidth { Header(onSearch, cartAction) }
+        store?.let { fullWidth { StoreWidget(it, onOpenSellerMode) } }
         fullWidth { Hero(onOpenFeatured) }
         fullWidth { CategoryShortcuts(state, onOpenCategory, onOpenAllCategories, onRetry) }
 

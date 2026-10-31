@@ -30,8 +30,8 @@ class FixtureTest {
             .build(),
     ).execute()
 
-    @Test fun contract_has_23_operations() {
-        assertEquals(23, ApiOperations.all.size)
+    @Test fun contract_has_25_operations() {
+        assertEquals(25, ApiOperations.all.size)
     }
 
     @Test fun every_generated_operation_has_a_fixture_or_is_bodyless() {

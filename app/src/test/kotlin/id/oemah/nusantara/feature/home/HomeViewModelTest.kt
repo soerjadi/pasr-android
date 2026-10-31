@@ -11,11 +11,14 @@ import id.oemah.nusantara.core.UiState
 import id.oemah.nusantara.feature.ads.AdPlacement
 import id.oemah.nusantara.feature.ads.AdsRepository
 import id.oemah.nusantara.feature.catalog.CatalogRepository
+import id.oemah.nusantara.feature.store.MyStoreRepository
 import id.oemah.nusantara.testing.FakeCartRepository
 import id.oemah.nusantara.testing.MainDispatcherRule
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -29,6 +32,7 @@ class HomeViewModelTest {
     private val catalog = mockk<CatalogRepository>()
     private val ads = mockk<AdsRepository>()
     private val cart = FakeCartRepository()
+    private val myStore = mockk<MyStoreRepository>(relaxed = true) { every { store } returns flowOf(null) }
 
     private val images = ImageSet("https://img/s.png", "https://img/m.png", "https://img/l.png")
     private fun category(id: Long) = Category(id, "Kategori $id", "food")
@@ -45,7 +49,7 @@ class HomeViewModelTest {
         coEvery { ads.ads(AdPlacement.HOME_SPONSORED_CARD) } returns Result.success(listOf(ad(2)))
     }
 
-    private fun viewModel() = HomeViewModel(catalog, ads, cart)
+    private fun viewModel() = HomeViewModel(catalog, ads, cart, myStore)
 
     @Test fun every_section_loads() = runTest {
         stubAll()

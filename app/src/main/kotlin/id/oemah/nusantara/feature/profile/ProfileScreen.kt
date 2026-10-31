@@ -2,6 +2,7 @@ package id.oemah.nusantara.feature.profile
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,13 +35,22 @@ import id.oemah.nusantara.R
 import id.oemah.nusantara.api.model.User
 import id.oemah.nusantara.core.UiEvent
 import id.oemah.nusantara.feature.ads.rememberLinkOpener
+import id.oemah.nusantara.feature.store.MyStoreCard
+import id.oemah.nusantara.feature.store.OpenStoreCard
 import id.oemah.nusantara.ui.components.PrimaryButton
 import id.oemah.nusantara.ui.components.StateHost
 
 @Composable
-fun ProfileRoute(onOpenOrders: () -> Unit, onLogin: () -> Unit, viewModel: ProfileViewModel = hiltViewModel()) {
+fun ProfileRoute(
+    onOpenOrders: () -> Unit,
+    onLogin: () -> Unit,
+    onOpenStore: () -> Unit,
+    onOpenSellerMode: () -> Unit,
+    viewModel: ProfileViewModel = hiltViewModel(),
+) {
     val loggedIn = viewModel.loggedIn.collectAsStateWithLifecycle().value
     val user = viewModel.user.collectAsStateWithLifecycle().value
+    val store = viewModel.store.collectAsStateWithLifecycle().value
     val openLink = rememberLinkOpener()
     val snackbar = remember { SnackbarHostState() }
     var showAbout by remember { mutableStateOf(false) }
@@ -60,6 +70,7 @@ fun ProfileRoute(onOpenOrders: () -> Unit, onLogin: () -> Unit, viewModel: Profi
                 ) {
                     Text(stringResource(R.string.profile_guest))
                     PrimaryButton(text = stringResource(R.string.orders_login_action), onClick = onLogin)
+                    OpenStoreCard(onOpenStore)
                     SupportAndAbout(viewModel.supportUrl, openLink) { showAbout = true }
                 }
             } else {
@@ -67,6 +78,9 @@ fun ProfileRoute(onOpenOrders: () -> Unit, onLogin: () -> Unit, viewModel: Profi
                     Column(Modifier.fillMaxSize()) {
                         Header(current) { editingName = true }
                         HorizontalDivider()
+                        Box(Modifier.padding(16.dp)) {
+                            if (store != null) MyStoreCard(store, onOpenSellerMode) else OpenStoreCard(onOpenStore)
+                        }
                         MenuRow(stringResource(R.string.profile_my_orders), onOpenOrders)
                         SupportAndAbout(viewModel.supportUrl, openLink) { showAbout = true }
                         MenuRow(stringResource(R.string.profile_logout), viewModel::logout)

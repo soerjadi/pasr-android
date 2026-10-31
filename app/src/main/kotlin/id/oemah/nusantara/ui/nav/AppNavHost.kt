@@ -8,6 +8,8 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -35,12 +37,13 @@ enum class BottomTab(val route: Route, @StringRes val label: Int, val icon: Imag
     Account(Route.Account, R.string.tab_account, Icons.Default.Person),
 }
 
-/** The tab shell (bottom bar + NavHost). The destinations come from [graph]. */
+/** The tab shell (bottom bar + NavHost). The destinations come from [graph]; [accountBadge] is the count shown on the Akun tab. */
 @Composable
 fun AppNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     startDestination: Route = Route.Home,
+    accountBadge: Int = 0,
     graph: NavGraphBuilder.() -> Unit,
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -63,7 +66,11 @@ fun AppNavHost(
                                     restoreState = true
                                 }
                             },
-                            icon = { Icon(tab.icon, contentDescription = null) },
+                            icon = {
+                                BadgedBox(badge = { if (tab == BottomTab.Account && accountBadge > 0) Badge { Text(accountBadge.toString()) } }) {
+                                    Icon(tab.icon, contentDescription = null)
+                                }
+                            },
                             label = { Text(label) },
                         )
                     }

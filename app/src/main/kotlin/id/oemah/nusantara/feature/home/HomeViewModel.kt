@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.oemah.nusantara.api.model.Ad
 import id.oemah.nusantara.api.model.Category
 import id.oemah.nusantara.api.model.ProductSummary
+import id.oemah.nusantara.api.model.StoreSummary
 import id.oemah.nusantara.core.UiState
 import id.oemah.nusantara.core.toUiState
 import id.oemah.nusantara.feature.ads.AdPlacement
@@ -14,10 +15,13 @@ import id.oemah.nusantara.feature.ads.adsOrEmpty
 import id.oemah.nusantara.feature.cart.CartRepository
 import id.oemah.nusantara.feature.cart.addProduct
 import id.oemah.nusantara.feature.catalog.CatalogRepository
+import id.oemah.nusantara.feature.store.MyStoreRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -41,7 +45,10 @@ class HomeViewModel @Inject constructor(
     private val catalog: CatalogRepository,
     private val ads: AdsRepository,
     private val cart: CartRepository,
+    private val myStore: MyStoreRepository,
 ) : ViewModel() {
+    val store: StateFlow<StoreSummary?> = myStore.store.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+
     private val _state = MutableStateFlow(HomeUiState())
     val state: StateFlow<HomeUiState> = _state.asStateFlow()
 
@@ -53,6 +60,7 @@ class HomeViewModel @Inject constructor(
         _state.update { it.copy(categories = UiState.Loading, featured = UiState.Loading) }
         viewModelScope.launch { catalog.categories().let { r -> _state.update { it.copy(categories = r.toUiState()) } } }
         viewModelScope.launch { catalog.featuredProducts().let { r -> _state.update { it.copy(featured = r.toUiState()) } } }
+        viewModelScope.launch { myStore.refresh() }
         viewModelScope.launch { ads.adsOrEmpty(AdPlacement.HOME_PARTNER_CAROUSEL).let { a -> _state.update { it.copy(partnerAds = a) } } }
         viewModelScope.launch { ads.adsOrEmpty(AdPlacement.HOME_SPONSORED_CARD).let { a -> _state.update { it.copy(sponsoredAds = a) } } }
     }

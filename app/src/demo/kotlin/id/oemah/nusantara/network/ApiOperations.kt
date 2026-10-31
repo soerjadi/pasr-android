@@ -21,7 +21,7 @@ object ApiOperations {
     class Operation(val name: String, val httpMethod: String, template: String, val bodyType: Type?) {
         /** Regex for the request path, `{param}` segments match any single path segment. */
         val pattern = Regex(
-            "^" + template.split(Regex("\\{[^}]+}")).joinToString("[^/]+") { Regex.escape(it) } + "$",
+            "^" + template.split(Regex("[{][^}]+[}]")).joinToString("[^/]+") { Regex.escape(it) } + "$",
         )
     }
 

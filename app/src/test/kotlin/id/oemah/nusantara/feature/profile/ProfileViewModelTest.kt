@@ -8,6 +8,7 @@ import id.oemah.nusantara.core.UiState
 import id.oemah.nusantara.core.network.FakeSessionStore
 import id.oemah.nusantara.core.network.session
 import id.oemah.nusantara.feature.auth.AuthRepository
+import id.oemah.nusantara.feature.store.MyStoreRepository
 import id.oemah.nusantara.testing.MainDispatcherRule
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -38,7 +39,7 @@ class ProfileViewModelTest {
     private fun viewModel(sessions: FakeSessionStore = FakeSessionStore(session()), support: String = "081234567890"): Triple<ProfileViewModel, FakeAuth, FakeSessionStore> {
         coEvery { profile.me() } returns Result.success(user)
         val auth = FakeAuth(sessions)
-        return Triple(ProfileViewModel(profile, auth, sessions, support), auth, sessions)
+        return Triple(ProfileViewModel(profile, auth, MyStoreRepository(profile, sessions), sessions, support), auth, sessions)
     }
 
     @Test fun loads_the_user_when_logged_in() = runTest {

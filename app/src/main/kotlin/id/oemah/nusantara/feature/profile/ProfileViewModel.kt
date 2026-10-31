@@ -3,6 +3,7 @@ package id.oemah.nusantara.feature.profile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.oemah.nusantara.api.model.StoreSummary
 import id.oemah.nusantara.api.model.User
 import id.oemah.nusantara.core.IndonesianPhone
 import id.oemah.nusantara.core.UiEvent
@@ -11,6 +12,7 @@ import id.oemah.nusantara.core.asAppError
 import id.oemah.nusantara.core.session.SessionStore
 import id.oemah.nusantara.core.toUiState
 import id.oemah.nusantara.feature.auth.AuthRepository
+import id.oemah.nusantara.feature.store.MyStoreRepository
 import id.oemah.nusantara.ui.components.userMessage
 import javax.inject.Inject
 import javax.inject.Named
@@ -29,12 +31,15 @@ import kotlinx.coroutines.launch
 class ProfileViewModel @Inject constructor(
     private val profile: ProfileRepository,
     private val auth: AuthRepository,
+    private val myStore: MyStoreRepository,
     sessions: SessionStore,
     @Named("supportWhatsapp") supportWhatsapp: String,
 ) : ViewModel() {
     val loggedIn: StateFlow<Boolean> = sessions.session
         .map { it != null }
         .stateIn(viewModelScope, SharingStarted.Eagerly, sessions.current() != null)
+
+    val store: StateFlow<StoreSummary?> = myStore.store.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     private val _user = MutableStateFlow<UiState<User>>(UiState.Loading)
     val user: StateFlow<UiState<User>> = _user.asStateFlow()
@@ -54,7 +59,11 @@ class ProfileViewModel @Inject constructor(
     fun reload() {
         if (!loggedIn.value) return
         _user.value = UiState.Loading
-        viewModelScope.launch { _user.value = profile.me().toUiState() }
+        viewModelScope.launch {
+            val result = profile.me()
+            result.onSuccess(myStore::update)
+            _user.value = result.toUiState()
+        }
     }
 
     fun updateName(raw: String) {
@@ -65,7 +74,7 @@ class ProfileViewModel @Inject constructor(
         }
         viewModelScope.launch {
             profile.updateName(name).fold(
-                onSuccess = { _user.value = UiState.Content(it) },
+                onSuccess = { myStore.update(it); _user.value = UiState.Content(it) },
                 onFailure = { _events.send(UiEvent.Message(it.asAppError().userMessage())) },
             )
         }

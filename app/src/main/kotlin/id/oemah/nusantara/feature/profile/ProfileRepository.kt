@@ -5,7 +5,11 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import id.oemah.nusantara.api.MeApi
+import id.oemah.nusantara.api.model.CreateProductRequest
+import id.oemah.nusantara.api.model.CreateStoreRequest
 import id.oemah.nusantara.api.model.DeviceRequest
+import id.oemah.nusantara.api.model.SellerProduct
+import id.oemah.nusantara.api.model.StoreSummary
 import id.oemah.nusantara.api.model.UpdateMeRequest
 import id.oemah.nusantara.api.model.User
 import id.oemah.nusantara.core.network.apiCall
@@ -15,6 +19,8 @@ interface ProfileRepository {
     suspend fun me(): Result<User>
     suspend fun updateName(name: String): Result<User>
     suspend fun registerDevice(token: String): Result<Unit>
+    suspend fun createStore(request: CreateStoreRequest): Result<StoreSummary>
+    suspend fun createProduct(request: CreateProductRequest): Result<SellerProduct>
 }
 
 class DefaultProfileRepository @Inject constructor(private val api: MeApi) : ProfileRepository {
@@ -23,6 +29,10 @@ class DefaultProfileRepository @Inject constructor(private val api: MeApi) : Pro
     override suspend fun updateName(name: String): Result<User> = apiCall { api.updateMe(UpdateMeRequest(name)) }
 
     override suspend fun registerDevice(token: String): Result<Unit> = apiCall { api.registerDevice(DeviceRequest(token)) }
+
+    override suspend fun createStore(request: CreateStoreRequest): Result<StoreSummary> = apiCall { api.createMyStore(request) }
+
+    override suspend fun createProduct(request: CreateProductRequest): Result<SellerProduct> = apiCall { api.createMyProduct(request) }
 }
 
 @Module

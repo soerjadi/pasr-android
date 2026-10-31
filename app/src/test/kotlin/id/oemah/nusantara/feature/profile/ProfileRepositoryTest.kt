@@ -1,7 +1,12 @@
 package id.oemah.nusantara.feature.profile
 
 import id.oemah.nusantara.api.MeApi
+import id.oemah.nusantara.api.model.CreateProductRequest
+import id.oemah.nusantara.api.model.CreateStoreRequest
 import id.oemah.nusantara.api.model.DeviceRequest
+import id.oemah.nusantara.api.model.SellerProduct
+import id.oemah.nusantara.api.model.StoreStatus
+import id.oemah.nusantara.api.model.StoreSummary
 import id.oemah.nusantara.api.model.UpdateMeRequest
 import id.oemah.nusantara.api.model.User
 import io.mockk.coEvery
@@ -33,5 +38,21 @@ class ProfileRepositoryTest {
         repo.registerDevice("tok").getOrThrow()
 
         coVerify(exactly = 1) { api.registerDevice(DeviceRequest("tok")) }
+    }
+
+    @Test fun creating_a_store_posts_the_form() = runTest {
+        val request = CreateStoreRequest("Warung Bu Sari", 3, "Sari", "Sambirejo", "RT 2")
+        val created = StoreSummary(7, "Warung Bu Sari", StoreStatus.PENDING, 0)
+        coEvery { api.createMyStore(request) } returns Response.success(created)
+
+        assertEquals(created, repo.createStore(request).getOrThrow())
+    }
+
+    @Test fun creating_a_product_posts_the_form() = runTest {
+        val request = CreateProductRequest("Nasi pecel", 15_000, 10)
+        val created = SellerProduct(31, "Nasi pecel", 15_000, 10)
+        coEvery { api.createMyProduct(request) } returns Response.success(created)
+
+        assertEquals(created, repo.createProduct(request).getOrThrow())
     }
 }
