@@ -204,4 +204,18 @@
     <string name="seller_home_no_orders">Belum ada pesanan</string>
     <string name="seller_home_no_orders_pending">Pesanan akan muncul di sini setelah tokomu terverifikasi.</string>
     <string name="seller_home_no_orders_verified">Pesanan baru dari tetangga akan muncul di sini.</string>
+
+    <!-- Seller Dashboard -->
+    <string name="seller_home_status_open">Buka</string>
+    <string name="seller_home_status_closed">Tutup</string>
+    <string name="seller_home_closes_at">Tutup pukul %1$s WIB</string>
+    <string name="seller_home_orders_today">Pesanan Hari Ini</string>
+    <string name="seller_home_sales_today">Penjualan Hari Ini</string>
+    <string name="seller_home_stats_title">Performa Penjualan</string>
+    <string name="seller_home_stats_today">Hari Ini</string>
+    <string name="seller_home_stats_week">7 Hari Terakhir</string>
+    <string name="seller_home_top_products_title">Produk Terlaris</string>
+    <string name="seller_home_completed_orders_count">%1$d pesanan selesai</string>
+    <string name="seller_home_units_sold">%1$d terjual</string>
+    <string name="seller_home_toggle_error">Gagal mengubah status toko. Silakan coba lagi.</string>
 </resources>
