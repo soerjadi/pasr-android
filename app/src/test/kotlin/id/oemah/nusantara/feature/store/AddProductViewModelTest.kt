@@ -40,7 +40,7 @@ class AddProductViewModelTest {
     }
 
     @Test fun saving_sends_the_request_and_signals_done() = runTest {
-        coEvery { myStore.createProduct(any()) } returns Result.success(SellerProduct(31, "Nasi pecel", 15_000, 10))
+        coEvery { myStore.createProduct(any()) } returns Result.success(SellerProduct(31, "Nasi pecel", 15_000, 10, "", SellerProduct.Status.AVAILABLE, emptyList()))
         fill()
 
         vm.saved.test {

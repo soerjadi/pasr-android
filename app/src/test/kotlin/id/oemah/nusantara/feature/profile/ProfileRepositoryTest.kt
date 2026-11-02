@@ -50,7 +50,7 @@ class ProfileRepositoryTest {
 
     @Test fun creating_a_product_posts_the_form() = runTest {
         val request = CreateProductRequest("Nasi pecel", 15_000, 10)
-        val created = SellerProduct(31, "Nasi pecel", 15_000, 10)
+        val created = SellerProduct(31, "Nasi pecel", 15_000, 10, "", SellerProduct.Status.AVAILABLE, emptyList())
         coEvery { api.createMyProduct(request) } returns Response.success(created)
 
         assertEquals(created, repo.createProduct(request).getOrThrow())

@@ -9,6 +9,10 @@ class ContractTest {
     private val expectedOperations = setOf(
         "requestOtp", "verifyOtp", "refreshSession", "logout",
         "getMe", "updateMe", "registerDevice", "createMyStore", "createMyProduct",
+        "getMyStore", "updateMyStore", "setMyStoreOpen", "uploadImage",
+        "listMyProducts", "getMyProduct", "updateMyProduct", "deleteMyProduct",
+        "getMyStoreSummary", "getMyStoreStats",
+        "listMyStoreOrders", "getMyStoreOrder", "acceptMyStoreOrder", "rejectMyStoreOrder", "readyMyStoreOrder", "completeMyStoreOrder",
         "listCategories", "listProducts", "getProduct", "getSeller", "listSellerReviews",
         "listFavorites", "addFavorite", "removeFavorite", "followSeller", "unfollowSeller", "submitReview",
         "validateCart", "createOrder", "listOrders", "getOrder",
@@ -22,7 +26,7 @@ class ContractTest {
                 .map { it.name }
         }.toSet()
 
-        assertEquals(25, expectedOperations.size)
+        assertEquals(41, expectedOperations.size)
         assertEquals(expectedOperations, actual)
     }
 }
