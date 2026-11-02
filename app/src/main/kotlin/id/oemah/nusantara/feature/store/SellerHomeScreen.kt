@@ -91,10 +91,10 @@ fun SellerHomeContent(
     isTogglingOpen: Boolean = false,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
     LaunchedEffect(actionError) {
         if (actionError != null) {
-            scope.launch {
+            snackbarHostState.currentSnackbarData?.dismiss()
+            launch {
                 snackbarHostState.showSnackbar(actionError)
             }
             onDismissError()
