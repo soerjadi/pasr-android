@@ -238,5 +238,6 @@ class SellerHomeScreenTest {
 
         compose.onNodeWithText("Gagal mengubah status toko. Silakan coba lagi.").assertIsDisplayed()
         assertTrue(dismissed)
+        compose.mainClock.advanceTimeBy(5000)
     }
 }
