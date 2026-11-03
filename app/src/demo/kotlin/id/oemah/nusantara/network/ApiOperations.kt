@@ -1,5 +1,6 @@
 package id.oemah.nusantara.network
 
+import id.oemah.nusantara.api.AdminApi
 import id.oemah.nusantara.api.AdsApi
 import id.oemah.nusantara.api.AuthApi
 import id.oemah.nusantara.api.CatalogApi
@@ -25,7 +26,7 @@ object ApiOperations {
         )
     }
 
-    private val apis = listOf(AuthApi::class.java, MeApi::class.java, CatalogApi::class.java, SocialApi::class.java, OrdersApi::class.java, AdsApi::class.java)
+    private val apis = listOf(AuthApi::class.java, MeApi::class.java, CatalogApi::class.java, SocialApi::class.java, OrdersApi::class.java, AdsApi::class.java, AdminApi::class.java)
 
     val all: List<Operation> = apis.flatMap { api ->
         api.declaredMethods.filterNot { it.isSynthetic || '$' in it.name }.mapNotNull(::toOperation)

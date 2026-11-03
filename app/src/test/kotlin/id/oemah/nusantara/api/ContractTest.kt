@@ -4,7 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ContractTest {
-    private val apiClasses = listOf("AuthApi", "MeApi", "CatalogApi", "SocialApi", "OrdersApi", "AdsApi")
+    private val apiClasses = listOf("AuthApi", "MeApi", "CatalogApi", "SocialApi", "OrdersApi", "AdsApi", "AdminApi")
 
     private val expectedOperations = setOf(
         "requestOtp", "verifyOtp", "refreshSession", "logout",
@@ -17,6 +17,12 @@ class ContractTest {
         "listFavorites", "addFavorite", "removeFavorite", "followSeller", "unfollowSeller", "submitReview",
         "validateCart", "createOrder", "listOrders", "getOrder",
         "listAds",
+        "listAdminStores", "verifyAdminStore", "suspendAdminStore", "reinstateAdminStore",
+        "updateAdminProduct",
+        "createAdminCategory", "updateAdminCategory", "deleteAdminCategory",
+        "listAdCampaigns", "createAdCampaign", "updateAdCampaign", "deleteAdCampaign",
+        "listAdminOrders", "acceptAdminSellerOrder", "rejectAdminSellerOrder", "readyAdminSellerOrder", "completeAdminSellerOrder", "cancelAdminSellerOrder",
+        "deleteAdminReview",
     )
 
     @Test fun generated_client_exposes_every_expected_operation() {
@@ -26,7 +32,7 @@ class ContractTest {
                 .map { it.name }
         }.toSet()
 
-        assertEquals(41, expectedOperations.size)
+        assertEquals(60, expectedOperations.size)
         assertEquals(expectedOperations, actual)
     }
 }
