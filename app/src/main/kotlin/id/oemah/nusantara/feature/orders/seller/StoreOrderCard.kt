@@ -111,7 +111,7 @@ fun StoreOrderCard(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = "Total",
+                    text = stringResource(R.string.cart_total),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -141,7 +141,10 @@ fun StoreOrderCard(
                             tint = MaterialTheme.colorScheme.error,
                         )
                         Text(
-                            text = "Batas konfirmasi: " + DateFormat.dateTime(order.acceptBy),
+                            text = stringResource(
+                                R.string.seller_order_confirm_deadline,
+                                DateFormat.dateTime(order.acceptBy),
+                            ),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onErrorContainer,
                         )

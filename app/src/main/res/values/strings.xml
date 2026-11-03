@@ -242,4 +242,9 @@
     <string name="seller_ready_note_hint">Catatan atau instruksi pengambilan (opsional)</string>
     <string name="seller_ready_confirm">Tandai Siap</string>
     <string name="seller_home_manage_orders">Kelola Pesanan</string>
+    <string name="seller_order_confirm_deadline">Batas konfirmasi: %1$s</string>
+    <string name="seller_order_pickup_note_title">Catatan Pengambilan</string>
+    <string name="seller_order_items_title">Rincian Pesanan</string>
+    <string name="seller_order_subtotal_title">Total Subtotal</string>
+    <string name="seller_order_timeline_title">Status Pesanan</string>
 </resources>

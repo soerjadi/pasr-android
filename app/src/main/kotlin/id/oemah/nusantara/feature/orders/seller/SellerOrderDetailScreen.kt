@@ -287,7 +287,10 @@ fun SellerOrderDetailContent(
                                 tint = MaterialTheme.colorScheme.error,
                             )
                             Text(
-                                text = "Batas konfirmasi: " + DateFormat.dateTime(order.acceptBy),
+                                text = stringResource(
+                                    R.string.seller_order_confirm_deadline,
+                                    DateFormat.dateTime(order.acceptBy),
+                                ),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onErrorContainer,
                             )
@@ -308,7 +311,7 @@ fun SellerOrderDetailContent(
                             verticalArrangement = Arrangement.spacedBy(4.dp),
                         ) {
                             Text(
-                                text = "Catatan Pengambilan",
+                                text = stringResource(R.string.seller_order_pickup_note_title),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -333,7 +336,7 @@ fun SellerOrderDetailContent(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         Text(
-                            text = "Rincian Pesanan",
+                            text = stringResource(R.string.seller_order_items_title),
                             style = MaterialTheme.typography.titleMedium,
                         )
                         HorizontalDivider()
@@ -369,7 +372,7 @@ fun SellerOrderDetailContent(
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text(
-                                text = "Total Subtotal",
+                                text = stringResource(R.string.seller_order_subtotal_title),
                                 style = MaterialTheme.typography.titleSmall,
                             )
                             Text(
@@ -393,7 +396,7 @@ fun SellerOrderDetailContent(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         Text(
-                            text = "Status Pesanan",
+                            text = stringResource(R.string.seller_order_timeline_title),
                             style = MaterialTheme.typography.titleMedium,
                         )
                         HorizontalDivider()
