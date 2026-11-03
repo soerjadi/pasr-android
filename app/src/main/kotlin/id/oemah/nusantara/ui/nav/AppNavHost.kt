@@ -29,6 +29,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 
+// Note: Sub-screens such as Route.SellerOrders and Route.SellerOrderDetail are full-screen
+// destinations outside BottomTab, so the bottom navigation bar is automatically hidden when active.
 enum class BottomTab(val route: Route, @StringRes val label: Int, val icon: ImageVector) {
     Home(Route.Home, R.string.tab_home, Icons.Default.Home),
     Categories(Route.Categories, R.string.tab_categories, Icons.Default.Menu),

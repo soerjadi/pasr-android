@@ -218,4 +218,28 @@
     <string name="seller_home_completed_orders_count">%1$d pesanan selesai</string>
     <string name="seller_home_units_sold">%1$d terjual</string>
     <string name="seller_home_toggle_error">Gagal mengubah status toko. Silakan coba lagi.</string>
+
+    <!-- Seller Incoming Orders -->
+    <string name="seller_orders_title">Pesanan Masuk</string>
+    <string name="seller_orders_tab_new">Baru</string>
+    <string name="seller_orders_tab_processing">Diproses</string>
+    <string name="seller_orders_tab_done">Selesai</string>
+    <string name="seller_orders_accept">Terima Pesanan</string>
+    <string name="seller_orders_reject">Tolak</string>
+    <string name="seller_orders_ready">Siap Diambil</string>
+    <string name="seller_orders_complete">Selesaikan Pesanan</string>
+    <string name="seller_orders_empty_new">Belum ada pesanan baru</string>
+    <string name="seller_orders_empty_processing">Tidak ada pesanan yang sedang diproses</string>
+    <string name="seller_orders_empty_done">Belum ada riwayat pesanan selesai</string>
+    <string name="seller_reject_title">Tolak Pesanan</string>
+    <string name="seller_reject_reason_out_of_stock">Stok produk habis</string>
+    <string name="seller_reject_reason_busy">Toko sedang sibuk / tutup</string>
+    <string name="seller_reject_reason_cannot_serve">Tidak dapat melayani pesanan</string>
+    <string name="seller_reject_reason_other">Alasan lainnya</string>
+    <string name="seller_reject_note_hint">Tulis alasan penolakan</string>
+    <string name="seller_reject_confirm">Tolak Pesanan</string>
+    <string name="seller_ready_title">Pesanan Siap Diambil</string>
+    <string name="seller_ready_note_hint">Catatan atau instruksi pengambilan (opsional)</string>
+    <string name="seller_ready_confirm">Tandai Siap</string>
+    <string name="seller_home_manage_orders">Kelola Pesanan</string>
 </resources>

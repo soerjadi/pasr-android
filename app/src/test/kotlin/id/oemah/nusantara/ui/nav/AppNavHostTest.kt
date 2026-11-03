@@ -52,4 +52,29 @@ class AppNavHostTest {
         rule.onNodeWithText("Kategori").assertIsSelected()
         rule.onNodeWithText("Beranda").assertIsNotSelected()
     }
+
+    @Test
+    fun can_navigate_to_seller_orders_and_detail_routes() {
+        lateinit var navController: androidx.navigation.NavHostController
+        rule.setContent {
+            NusantaraTheme {
+                navController = rememberNavController()
+                AppNavHost(navController = navController) {
+                    composable<Route.Home> { Text("Halaman Beranda") }
+                    composable<Route.SellerOrders> { Text("Halaman Pesanan Masuk") }
+                    composable<Route.SellerOrderDetail> { Text("Halaman Detail Pesanan") }
+                }
+            }
+        }
+
+        rule.runOnUiThread {
+            navController.navigate(Route.SellerOrders(initialTab = "NEW"))
+        }
+        rule.onNodeWithText("Halaman Pesanan Masuk").assertExists()
+
+        rule.runOnUiThread {
+            navController.navigate(Route.SellerOrderDetail(orderId = 42L))
+        }
+        rule.onNodeWithText("Halaman Detail Pesanan").assertExists()
+    }
 }
