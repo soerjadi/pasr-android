@@ -240,4 +240,88 @@ class SellerHomeScreenTest {
         assertTrue(dismissed)
         compose.mainClock.advanceTimeBy(5000)
     }
+
+    @Test fun clicking_manage_orders_triggers_onOpenOrders() {
+        val summary = StoreSummaryResponse(
+            isOpen = true,
+            closesAt = "17:00",
+            newOrderCount = 0,
+            acceptBy = null,
+            ordersToday = 2,
+            salesToday = 30_000,
+            latestOrders = emptyList(),
+        )
+        val stats = StoreStats(
+            range = StoreStats.Range.TODAY,
+            salesValue = 30_000,
+            completedOrders = 2,
+            daily = emptyList(),
+            topProducts = emptyList(),
+        )
+
+        var openedTab: String? = null
+        compose.setContent {
+            NusantaraTheme {
+                SellerHomeContent(
+                    store = StoreSummary(1, "Warung Bu Siti", StoreStatus.VERIFIED, 0),
+                    ownerName = "Siti",
+                    summaryState = UiState.Content(summary),
+                    statsState = UiState.Content(stats),
+                    selectedRange = MeApi.RangeGetMyStoreStats.TODAY,
+                    onBack = {},
+                    onAddProduct = {},
+                    onToggleOpen = {},
+                    onSelectRange = {},
+                    actionError = null,
+                    onDismissError = {},
+                    onOpenOrders = { openedTab = it },
+                )
+            }
+        }
+
+        compose.onNodeWithText("Kelola Pesanan").performClick()
+        assertEquals("NEW", openedTab)
+    }
+
+    @Test fun clicking_new_orders_banner_triggers_onOpenOrders() {
+        val summary = StoreSummaryResponse(
+            isOpen = true,
+            closesAt = "17:00",
+            newOrderCount = 3,
+            acceptBy = null,
+            ordersToday = 2,
+            salesToday = 30_000,
+            latestOrders = emptyList(),
+        )
+        val stats = StoreStats(
+            range = StoreStats.Range.TODAY,
+            salesValue = 30_000,
+            completedOrders = 2,
+            daily = emptyList(),
+            topProducts = emptyList(),
+        )
+
+        var openedTab: String? = null
+        compose.setContent {
+            NusantaraTheme {
+                SellerHomeContent(
+                    store = StoreSummary(1, "Warung Bu Siti", StoreStatus.VERIFIED, 3),
+                    ownerName = "Siti",
+                    summaryState = UiState.Content(summary),
+                    statsState = UiState.Content(stats),
+                    selectedRange = MeApi.RangeGetMyStoreStats.TODAY,
+                    onBack = {},
+                    onAddProduct = {},
+                    onToggleOpen = {},
+                    onSelectRange = {},
+                    actionError = null,
+                    onDismissError = {},
+                    onOpenOrders = { openedTab = it },
+                )
+            }
+        }
+
+        compose.onNodeWithText("3 pesanan baru menunggu").performClick()
+        assertEquals("NEW", openedTab)
+    }
 }

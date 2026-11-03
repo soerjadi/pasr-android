@@ -22,6 +22,8 @@ import id.oemah.nusantara.feature.onboarding.OnboardingRoute
 import id.oemah.nusantara.feature.orders.ConfirmationRoute
 import id.oemah.nusantara.feature.orders.TrackingRoute
 import id.oemah.nusantara.feature.orders.history.OrderHistoryRoute
+import id.oemah.nusantara.feature.orders.seller.SellerOrderDetailRoute
+import id.oemah.nusantara.feature.orders.seller.SellerOrdersRoute
 import id.oemah.nusantara.feature.products.ProductListRoute
 import id.oemah.nusantara.feature.profile.ProfileRoute
 import id.oemah.nusantara.feature.products.SearchRoute
@@ -163,7 +165,23 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
         )
     }
     composable<Route.SellerMode> {
-        SellerHomeRoute(onBack = { navController.popBackStack() }, onAddProduct = { navController.navigate(Route.AddProduct()) })
+        SellerHomeRoute(
+            onBack = { navController.popBackStack() },
+            onAddProduct = { navController.navigate(Route.AddProduct()) },
+            onOpenOrders = { tab -> navController.navigate(Route.SellerOrders(tab)) },
+            onOpenOrderDetail = { orderId -> navController.navigate(Route.SellerOrderDetail(orderId)) },
+        )
+    }
+    composable<Route.SellerOrders> {
+        SellerOrdersRoute(
+            onBack = { navController.popBackStack() },
+            onOpenOrder = { orderId -> navController.navigate(Route.SellerOrderDetail(orderId)) },
+        )
+    }
+    composable<Route.SellerOrderDetail> {
+        SellerOrderDetailRoute(
+            onBack = { navController.popBackStack() },
+        )
     }
     composable<Route.Login> { LoginRoute(onLoggedIn = { navController.popBackStack() }) }
 }

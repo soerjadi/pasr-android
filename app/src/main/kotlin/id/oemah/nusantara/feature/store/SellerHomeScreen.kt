@@ -2,6 +2,7 @@ package id.oemah.nusantara.feature.store
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
@@ -53,6 +55,8 @@ import kotlinx.coroutines.launch
 fun SellerHomeRoute(
     onBack: () -> Unit,
     onAddProduct: () -> Unit,
+    onOpenOrders: (String) -> Unit = {},
+    onOpenOrderDetail: (Long) -> Unit = {},
     viewModel: SellerHomeViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
@@ -71,6 +75,8 @@ fun SellerHomeRoute(
         onToggleOpen = viewModel::toggleStoreOpen,
         onSelectRange = viewModel::selectStatsRange,
         onDismissError = viewModel::dismissActionError,
+        onOpenOrders = onOpenOrders,
+        onOpenOrderDetail = onOpenOrderDetail,
     )
 }
 
@@ -89,6 +95,8 @@ fun SellerHomeContent(
     onDismissError: () -> Unit,
     modifier: Modifier = Modifier,
     isTogglingOpen: Boolean = false,
+    onOpenOrders: (String) -> Unit = {},
+    onOpenOrderDetail: (Long) -> Unit = {},
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     LaunchedEffect(actionError) {
@@ -161,7 +169,10 @@ fun SellerHomeContent(
                     val newOrders = (summaryState as? UiState.Content)?.data?.newOrderCount ?: store.newOrderCount
                     val acceptBy = (summaryState as? UiState.Content)?.data?.acceptBy ?: store.acceptBy
                     if (newOrders > 0) {
-                        Section(stringResource(R.string.store_new_orders, newOrders)) {
+                        Section(
+                            title = stringResource(R.string.store_new_orders, newOrders),
+                            onClick = { onOpenOrders("NEW") },
+                        ) {
                             AcceptCountdown(acceptBy)
                         }
                     }
@@ -171,6 +182,14 @@ fun SellerHomeContent(
                         selectedRange = selectedRange,
                         onSelectRange = onSelectRange,
                     )
+
+                    Button(
+                        onClick = { onOpenOrders("NEW") },
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                        shape = RoundedCornerShape(12.dp),
+                    ) {
+                        Text(stringResource(R.string.seller_home_manage_orders))
+                    }
 
                     OutlinedButton(
                         onClick = onAddProduct,
@@ -445,15 +464,29 @@ private fun PendingSection() {
 }
 
 @Composable
-private fun Section(title: String, content: @Composable () -> Unit) {
+private fun Section(
+    title: String,
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
+    content: @Composable () -> Unit,
+) {
+    val cardModifier = if (onClick != null) {
+        modifier.fillMaxWidth().clickable(onClick = onClick)
+    } else {
+        modifier.fillMaxWidth()
+    }
     Card(
         shape = RoundedCornerShape(16.dp),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = cardModifier,
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Text(title, style = MaterialTheme.typography.titleSmall)
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleSmall,
+                modifier = if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier,
+            )
             content()
         }
     }
