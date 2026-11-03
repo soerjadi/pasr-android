@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import id.oemah.nusantara.BuildConfig
+import id.oemah.nusantara.api.AdminApi
 import id.oemah.nusantara.api.AdsApi
 import id.oemah.nusantara.api.AuthApi
 import id.oemah.nusantara.api.CatalogApi
@@ -65,4 +66,5 @@ object NetworkModule {
     @Provides @Singleton fun socialApi(retrofit: Retrofit): SocialApi = retrofit.create(SocialApi::class.java)
     @Provides @Singleton fun ordersApi(retrofit: Retrofit): OrdersApi = retrofit.create(OrdersApi::class.java)
     @Provides @Singleton fun adsApi(retrofit: Retrofit): AdsApi = retrofit.create(AdsApi::class.java)
+    @Provides @Singleton fun adminApi(retrofit: Retrofit): AdminApi = retrofit.create(AdminApi::class.java)
 }
