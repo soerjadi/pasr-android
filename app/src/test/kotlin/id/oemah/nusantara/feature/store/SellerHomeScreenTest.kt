@@ -5,6 +5,7 @@ import androidx.compose.ui.test.isToggleable
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import id.oemah.nusantara.api.MeApi
 import id.oemah.nusantara.api.model.StoreStats
 import id.oemah.nusantara.api.model.StoreStatsTopProductsInner
@@ -323,5 +324,47 @@ class SellerHomeScreenTest {
 
         compose.onNodeWithText("3 pesanan baru menunggu").performClick()
         assertEquals("NEW", openedTab)
+    }
+
+    @Test fun clicking_manage_products_triggers_onManageProducts() {
+        val summary = StoreSummaryResponse(
+            isOpen = true,
+            closesAt = "17:00",
+            newOrderCount = 0,
+            acceptBy = null,
+            ordersToday = 2,
+            salesToday = 30_000,
+            latestOrders = emptyList(),
+        )
+        val stats = StoreStats(
+            range = StoreStats.Range.TODAY,
+            salesValue = 30_000,
+            completedOrders = 2,
+            daily = emptyList(),
+            topProducts = emptyList(),
+        )
+
+        var manageProductsClicked = false
+        compose.setContent {
+            NusantaraTheme {
+                SellerHomeContent(
+                    store = StoreSummary(1, "Warung Bu Siti", StoreStatus.VERIFIED, 0),
+                    ownerName = "Siti",
+                    summaryState = UiState.Content(summary),
+                    statsState = UiState.Content(stats),
+                    selectedRange = MeApi.RangeGetMyStoreStats.TODAY,
+                    onBack = {},
+                    onAddProduct = {},
+                    onToggleOpen = {},
+                    onSelectRange = {},
+                    actionError = null,
+                    onDismissError = {},
+                    onManageProducts = { manageProductsClicked = true },
+                )
+            }
+        }
+
+        compose.onNodeWithText("Kelola Produk").performScrollTo().performClick()
+        assertTrue(manageProductsClicked)
     }
 }

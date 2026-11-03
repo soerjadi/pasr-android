@@ -55,6 +55,7 @@ import kotlinx.coroutines.launch
 fun SellerHomeRoute(
     onBack: () -> Unit,
     onAddProduct: () -> Unit,
+    onManageProducts: () -> Unit = {},
     onOpenOrders: (String) -> Unit = {},
     onOpenOrderDetail: (Long) -> Unit = {},
     viewModel: SellerHomeViewModel = hiltViewModel(),
@@ -72,6 +73,7 @@ fun SellerHomeRoute(
         actionError = state.actionError,
         onBack = onBack,
         onAddProduct = onAddProduct,
+        onManageProducts = onManageProducts,
         onToggleOpen = viewModel::toggleStoreOpen,
         onSelectRange = viewModel::selectStatsRange,
         onDismissError = viewModel::dismissActionError,
@@ -97,6 +99,7 @@ fun SellerHomeContent(
     isTogglingOpen: Boolean = false,
     onOpenOrders: (String) -> Unit = {},
     onOpenOrderDetail: (Long) -> Unit = {},
+    onManageProducts: () -> Unit = {},
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     LaunchedEffect(actionError) {
@@ -189,6 +192,15 @@ fun SellerHomeContent(
                         shape = RoundedCornerShape(12.dp),
                     ) {
                         Text(stringResource(R.string.seller_home_manage_orders))
+                    }
+
+                    OutlinedButton(
+                        onClick = onManageProducts,
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                        border = BorderStroke(1.5.dp, MaterialTheme.colorScheme.primary),
+                        shape = RoundedCornerShape(12.dp),
+                    ) {
+                        Text(stringResource(R.string.seller_home_manage_products))
                     }
 
                     OutlinedButton(

@@ -31,10 +31,11 @@ import id.oemah.nusantara.feature.products.detail.ProductDetailRoute
 import id.oemah.nusantara.feature.review.WriteReviewRoute
 import id.oemah.nusantara.feature.seller.SellerRoute
 import id.oemah.nusantara.feature.social.FavoritesRoute
-import id.oemah.nusantara.feature.store.AddProductRoute
 import id.oemah.nusantara.feature.store.OpenStoreIntroRoute
 import id.oemah.nusantara.feature.store.SellerHomeRoute
 import id.oemah.nusantara.feature.store.StoreFormRoute
+import id.oemah.nusantara.feature.store.products.ProductEditorRoute
+import id.oemah.nusantara.feature.store.products.SellerProductsRoute
 
 /** Every real destination of the app. Later features register their screens here. */
 fun NavGraphBuilder.appGraph(navController: NavHostController) {
@@ -156,18 +157,27 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
     }
     composable<Route.AddProduct> {
         val onboarding = it.toRoute<Route.AddProduct>().onboarding
-        AddProductRoute(
-            onboarding = onboarding,
+        ProductEditorRoute(
             onBack = { navController.popBackStack() },
-            onDone = {
-                if (onboarding) navController.navigate(Route.SellerMode) { popUpTo<Route.AddProduct> { inclusive = true } } else navController.popBackStack()
+            onSaved = {
+                if (onboarding) navController.navigate(Route.SellerMode) { popUpTo<Route.AddProduct> { inclusive = true } }
+                else navController.popBackStack()
             },
+            onDeleted = { navController.popBackStack() },
+        )
+    }
+    composable<Route.EditProduct> {
+        ProductEditorRoute(
+            onBack = { navController.popBackStack() },
+            onSaved = { navController.popBackStack() },
+            onDeleted = { navController.popBackStack() },
         )
     }
     composable<Route.SellerMode> {
         SellerHomeRoute(
             onBack = { navController.popBackStack() },
             onAddProduct = { navController.navigate(Route.AddProduct()) },
+            onManageProducts = { navController.navigate(Route.SellerProducts) },
             onOpenOrders = { tab -> navController.navigate(Route.SellerOrders(tab)) },
             onOpenOrderDetail = { orderId -> navController.navigate(Route.SellerOrderDetail(orderId)) },
         )
@@ -184,10 +194,11 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
         )
     }
     composable<Route.SellerProducts> {
-        Placeholder(stringResource(R.string.seller_products_title))
-    }
-    composable<Route.EditProduct> {
-        Placeholder(stringResource(R.string.seller_product_form_edit_title))
+        SellerProductsRoute(
+            onBack = { navController.popBackStack() },
+            onAddProduct = { navController.navigate(Route.AddProduct()) },
+            onEditProduct = { productId -> navController.navigate(Route.EditProduct(productId)) },
+        )
     }
     composable<Route.Login> { LoginRoute(onLoggedIn = { navController.popBackStack() }) }
 }
