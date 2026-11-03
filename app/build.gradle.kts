@@ -76,6 +76,9 @@ android {
 
     testOptions {
         unitTests.isIncludeAndroidResources = true
+        unitTests.all {
+            it.forkEvery = 15
+        }
     }
 }
 

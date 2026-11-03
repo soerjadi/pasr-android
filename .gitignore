@@ -13,3 +13,4 @@ captures/
 
 # Superpowers scratch workspace
 .superpowers/
+.kotlin/
