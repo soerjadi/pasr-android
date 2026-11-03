@@ -2,6 +2,8 @@ package id.oemah.nusantara.feature.orders
 
 import id.oemah.nusantara.api.model.Order
 import id.oemah.nusantara.api.model.OrderStatus
+import id.oemah.nusantara.api.model.StatusChange
+import id.oemah.nusantara.api.model.StoreOrder
 import java.time.Instant
 
 enum class StepState { DONE, CURRENT, PENDING, CANCELLED }
@@ -16,27 +18,27 @@ object OrderTimeline {
         OrderStatus.COMPLETED,
     )
 
-    /**
-     * The four-step path for a live order. A cancelled order shows the steps it actually reached
-     * followed by a "Dibatalkan" step, never steps it can no longer take.
-     */
-    fun steps(order: Order): List<TimelineStep> {
-        val at = order.statusHistory.mapNotNull { change -> parse(change.at)?.let { change.status to it } }.toMap()
+    fun steps(order: Order): List<TimelineStep> = steps(order.status, order.statusHistory)
 
-        if (order.status == OrderStatus.CANCELLED) {
-            val reached = order.statusHistory.mapNotNull { PATH.indexOf(it.status).takeIf { i -> i >= 0 } }.maxOrNull() ?: 0
+    fun steps(order: StoreOrder): List<TimelineStep> = steps(order.status, order.statusHistory)
+
+    fun steps(status: OrderStatus, statusHistory: List<StatusChange>): List<TimelineStep> {
+        val at = statusHistory.mapNotNull { change -> parse(change.at)?.let { change.status to it } }.toMap()
+
+        if (status == OrderStatus.CANCELLED) {
+            val reached = statusHistory.mapNotNull { PATH.indexOf(it.status).takeIf { i -> i >= 0 } }.maxOrNull() ?: 0
             return PATH.take(reached + 1).map { TimelineStep(it.label(), StepState.DONE, at[it]) } +
                 TimelineStep(OrderStatus.CANCELLED.label(), StepState.CANCELLED, at[OrderStatus.CANCELLED])
         }
 
-        val current = PATH.indexOf(order.status)
-        return PATH.mapIndexed { index, status ->
+        val current = PATH.indexOf(status)
+        return PATH.mapIndexed { index, s ->
             val state = when {
                 index < current -> StepState.DONE
-                index == current -> if (status == OrderStatus.COMPLETED) StepState.DONE else StepState.CURRENT
+                index == current -> if (s == OrderStatus.COMPLETED) StepState.DONE else StepState.CURRENT
                 else -> StepState.PENDING
             }
-            TimelineStep(status.label(), state, at[status])
+            TimelineStep(s.label(), state, at[s])
         }
     }
 
