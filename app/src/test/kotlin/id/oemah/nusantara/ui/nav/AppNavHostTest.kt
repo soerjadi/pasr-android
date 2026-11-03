@@ -77,4 +77,29 @@ class AppNavHostTest {
         }
         rule.onNodeWithText("Halaman Detail Pesanan").assertExists()
     }
+
+    @Test
+    fun can_navigate_to_seller_products_and_edit_routes() {
+        lateinit var navController: androidx.navigation.NavHostController
+        rule.setContent {
+            NusantaraTheme {
+                navController = rememberNavController()
+                AppNavHost(navController = navController) {
+                    composable<Route.Home> { Text("Halaman Beranda") }
+                    composable<Route.SellerProducts> { Text("Halaman Kelola Produk") }
+                    composable<Route.EditProduct> { Text("Halaman Ubah Produk") }
+                }
+            }
+        }
+
+        rule.runOnUiThread {
+            navController.navigate(Route.SellerProducts)
+        }
+        rule.onNodeWithText("Halaman Kelola Produk").assertExists()
+
+        rule.runOnUiThread {
+            navController.navigate(Route.EditProduct(productId = 101L))
+        }
+        rule.onNodeWithText("Halaman Ubah Produk").assertExists()
+    }
 }

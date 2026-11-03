@@ -17,6 +17,8 @@ sealed interface Route {
     @Serializable data object StoreForm : Route
     @Serializable data class AddProduct(val onboarding: Boolean = false) : Route
     @Serializable data object SellerMode : Route
+    @Serializable data object SellerProducts : Route
+    @Serializable data class EditProduct(val productId: Long) : Route
     @Serializable data class SellerOrders(val initialTab: String = "NEW") : Route
     @Serializable data class SellerOrderDetail(val orderId: Long) : Route
     @Serializable data object Search : Route

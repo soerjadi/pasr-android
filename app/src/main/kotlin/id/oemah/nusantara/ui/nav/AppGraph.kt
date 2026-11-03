@@ -183,6 +183,12 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
             onBack = { navController.popBackStack() },
         )
     }
+    composable<Route.SellerProducts> {
+        Placeholder(stringResource(R.string.seller_products_title))
+    }
+    composable<Route.EditProduct> {
+        Placeholder(stringResource(R.string.seller_product_form_edit_title))
+    }
     composable<Route.Login> { LoginRoute(onLoggedIn = { navController.popBackStack() }) }
 }
 

@@ -247,4 +247,35 @@
     <string name="seller_order_items_title">Rincian Pesanan</string>
     <string name="seller_order_subtotal_title">Total Subtotal</string>
     <string name="seller_order_timeline_title">Status Pesanan</string>
+
+    <!-- Seller Product Management -->
+    <string name="seller_home_manage_products">Kelola Produk</string>
+    <string name="seller_products_title">Kelola Produk</string>
+    <string name="seller_products_tab_all">Semua</string>
+    <string name="seller_products_tab_available">Tersedia</string>
+    <string name="seller_products_tab_out_of_stock">Habis</string>
+    <string name="seller_products_tab_hidden">Diarsipkan</string>
+    <string name="seller_products_empty_all">Belum ada produk yang terdaftar</string>
+    <string name="seller_products_empty_available">Tidak ada produk yang sedang tersedia</string>
+    <string name="seller_products_empty_out_of_stock">Tidak ada produk yang stoknya habis</string>
+    <string name="seller_products_empty_hidden">Tidak ada produk yang diarsipkan</string>
+    <string name="seller_products_edit">Ubah</string>
+    <string name="seller_products_mark_available">Tandai Tersedia</string>
+    <string name="seller_products_mark_out_of_stock">Tandai Habis</string>
+    <string name="seller_products_mark_hidden">Arsipkan Produk</string>
+    <string name="seller_products_delete">Hapus Produk</string>
+    <string name="seller_delete_product_title">Hapus Produk?</string>
+    <string name="seller_delete_product_message">Produk yang dihapus tidak dapat dilihat atau dibeli oleh pelanggan.</string>
+    <string name="seller_delete_product_confirm">Hapus</string>
+    <string name="seller_product_form_add_title">Tambah Produk</string>
+    <string name="seller_product_form_edit_title">Ubah Produk</string>
+    <string name="seller_product_form_photo">Foto Produk</string>
+    <string name="seller_product_form_photo_add">+ Tambah Foto</string>
+    <string name="seller_product_form_photo_change">Ganti Foto</string>
+    <string name="seller_product_form_photo_uploading">Mengunggah foto...</string>
+    <string name="seller_product_form_description">Deskripsi Produk</string>
+    <string name="seller_product_form_description_hint">Tulis deskripsi produk secara lengkap (opsional)</string>
+    <string name="seller_product_form_status">Status Produk</string>
+    <string name="seller_product_form_save">Simpan Produk</string>
+    <string name="seller_product_form_update">Perbarui Produk</string>
 </resources>
