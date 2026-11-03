@@ -237,7 +237,7 @@
     <string name="seller_reject_reason_cannot_serve">Tidak dapat melayani pesanan</string>
     <string name="seller_reject_reason_other">Alasan lainnya</string>
     <string name="seller_reject_note_hint">Tulis alasan penolakan</string>
-    <string name="seller_reject_confirm">Tolak Pesanan</string>
+    <string name="seller_reject_confirm">Konfirmasi Tolak</string>
     <string name="seller_ready_title">Pesanan Siap Diambil</string>
     <string name="seller_ready_note_hint">Catatan atau instruksi pengambilan (opsional)</string>
     <string name="seller_ready_confirm">Tandai Siap</string>
